@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Objeto;
+package Control;
 
 import java.util.Date;
 
@@ -23,7 +23,7 @@ public class Conta {
     private String destino;
     private String telefoneChamado;
     private String tarifa;
-    private Date duracao;
+    private String duracao;
     private String operadoraDestino;
     private String origem;
     private String tipoChamada;
@@ -31,8 +31,9 @@ public class Conta {
     private String unidade;
     private String referencia;
     private Double valor;
+    private String tipo; // variavel extra, não consta na fatura. Utilizada para agrupar os serviços em comum para medição 
 
-    public Conta(long numConta, long telefoneOrigem, String detalheServico, String descricaoServico, String destinoServico, String dataLigacao, Date horaInicio, String destino, String telefoneChamado, String tarifa, Date duracao, String operadoraDestino, String origem, String tipoChamada, String servico, String unidade, String referencia, Double valor) {
+    public Conta(long numConta, long telefoneOrigem, String detalheServico, String descricaoServico, String destinoServico, String dataLigacao, Date horaInicio, String destino, String telefoneChamado, String tarifa, String duracao, String operadoraDestino, String origem, String tipoChamada, String servico, String unidade, String referencia, Double valor, String tipo) {
         this.numConta = numConta;
         this.telefoneOrigem = telefoneOrigem;
         this.detalheServico = detalheServico;
@@ -51,6 +52,7 @@ public class Conta {
         this.unidade = unidade;
         this.referencia = referencia;
         this.valor = valor;
+        this.tipo = tipo;
     }
 
     public Conta() {
@@ -64,7 +66,7 @@ public class Conta {
         this.destino = "";
         this.telefoneChamado = "";
         this.tarifa = "";
-        this.duracao = new Date();
+        this.duracao = "00:00:00";
         this.operadoraDestino = "";
         this.origem = "";
         this.tipoChamada = "";
@@ -72,6 +74,7 @@ public class Conta {
         this.unidade = "";
         this.referencia = "";
         this.valor = 0.0;
+        this.tipo = "";
     }
 
     public long getNumConta() {
@@ -154,11 +157,11 @@ public class Conta {
         this.tarifa = tarifa;
     }
 
-    public Date getDuracao() {
+    public String getDuracao() {
         return duracao;
     }
 
-    public void setDuracao(Date duracao) {
+    public void setDuracao(String duracao) {
         this.duracao = duracao;
     }
 
@@ -217,7 +220,14 @@ public class Conta {
     public void setValor(Double valor) {
         this.valor = valor;
     }
-    
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
     
     
 }
