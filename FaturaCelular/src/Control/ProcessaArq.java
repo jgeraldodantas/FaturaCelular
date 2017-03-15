@@ -8,10 +8,13 @@ package Control;
 import Banco.Banco;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -52,54 +55,45 @@ public class ProcessaArq {
     public ArrayList<Conta> buscaRelatorioServicos(){         
         return banco.getRelatorioServicos();
     }
-   /* 
-    public ArrayList<Conta> buscaResumoRelatorioServicos(){         
-        return banco.resumeConta();
-    }
-   */ 
+
     public void gravaArquivo(ArrayList<Conta> lista, String caminho) throws IOException, DocumentException{
         ArrayList<String> listaTipos;
-        String tipo;
         String local[];        
-        String informacao;      
-        String somaTempo;
-        String tempoTotal = new String();
         Document doc = null;
         OutputStream os = null;
         Paragraph p = new Paragraph();  
         Tratamento tempo = new Tratamento();
         DecimalFormat df = new DecimalFormat("#,####.##");
-        Double soma = 0.0; 
-        Double valorTotal = 0.0;        
+        String informacao, tempoServico, tempoSubTotal, tempoTotal, tipo = new String();
+        Double soma, valorTotal = 0.0;      
+        
         
         local = caminho.split(".CSV");         
         caminho = local[0]+".pdf";        
         try {//configurações da página
-            //cria o documento tamanho A4, margens de 2,54cm
+          
             float fntSize, lineSpacing;
             fntSize = 10f;
             lineSpacing = 10f;
-            doc = new Document(PageSize.A4.rotate(), 72, 72, 72, 72);
+            doc = new Document(PageSize.A4.rotate(), 50, 50, 50, 50);
             
-            //cria a stream de saída
-            os = new FileOutputStream(caminho);
-            
-            //associa a stream de saída ao
-            PdfWriter.getInstance(doc, os);
-            
-            //abre o documento
+            os = new FileOutputStream(caminho);            
+            PdfWriter.getInstance(doc, os);            
             doc.open();
-            
-            //adiciona o texto ao PDF                                                   
+                                    
+            tempoTotal = "00:00:00";  
+            tempoServico = "00:00:00";    
+            tempoSubTotal = "00:00:00";  
             listaTipos = new ArrayList<String>();
             for(int a=0;a<lista.size()-1;a++){
                 
                 if(!listaTipos.contains(lista.get(a).getTipo())){
+                    
                     listaTipos.add(lista.get(a).getTipo());                                            
-                    soma = 0.0;                
-                    tipo = new String(); 
-                    somaTempo = "00:00:00";
+                    soma = 0.0;          
+                    tipo = new String();
                     informacao = new String();  
+                    
                     informacao = "**** "+listaTipos.get(listaTipos.size()-1)+" ****";
                     p = new Paragraph(new Phrase(lineSpacing,informacao,FontFactory.getFont(FontFactory.COURIER, fntSize)));
                     doc.add(p);  
@@ -108,34 +102,41 @@ public class ProcessaArq {
                         if( lista.get(b).getTipo().equals(listaTipos.get(listaTipos.size()-1)) ){
                     
                             soma += lista.get(b).getValor();
-                            somaTempo = tempo.somaTempo(somaTempo, lista.get(b).getDuracao());
+                            tempoServico = tempo.somaTempo(lista.get(b).getDuracao(),tempoServico);
+                            tempoSubTotal = tempo.somaTempo(tempoServico,tempoSubTotal);
+                            tempoTotal = tempo.somaTempo(tempoServico,tempoTotal);
                             tipo = listaTipos.get(listaTipos.size()-1);  
                             
                             informacao = new String();
-                            informacao = lista.get(b).getDescricaoServico() +"      "+ somaTempo +"      R$"+ df.format(lista.get(b).getValor());
-
+                            informacao = lista.get(b).getDescricaoServico() +"      "+ tempoServico +" = "+  tempo.conversaoHoraMinuto(tempoServico) +"      R$"+ df.format(lista.get(b).getValor());
+                            tempoServico = "00:00:00";     
+                            
                             System.out.println(informacao);                
                             p = new Paragraph(new Phrase(lineSpacing,informacao,FontFactory.getFont(FontFactory.COURIER, fntSize)));
                             doc.add(p);
                         }
-                    }
-                    listaTipos.add(tipo);
+                    } 
                     
+                    
+                    listaTipos.add(tipo);                    
                     valorTotal += soma;   
+                    
                     informacao = new String();
-                    informacao = "Sub Total:      "+  somaTempo  +"      R$"+ df.format(soma) +"\n\n";
+                    informacao = "Sub Total:      "+  tempoSubTotal +" = "+ tempo.conversaoHoraMinuto(tempoSubTotal)  +"      R$"+ df.format(soma) +"\n\n\n";
+                    tempoSubTotal = "00:00:00";
+                    
                     System.out.println(informacao);                
                     p = new Paragraph(new Phrase(lineSpacing,informacao,FontFactory.getFont(FontFactory.COURIER, fntSize)));
                     doc.add(p);   
-                }                
+                }       
             }
+            
             informacao = new String();
-            informacao = "Valor Total: R$"+df.format(valorTotal);
+            informacao = "Total Geral:  "+ tempoTotal +" = "+ tempo.conversaoHoraMinuto(tempoTotal) +"  R$"+df.format(valorTotal);
             p = new Paragraph(new Phrase(lineSpacing,informacao,FontFactory.getFont(FontFactory.COURIER, fntSize)));
             doc.add(p);
             System.out.println(informacao);
-        
-            
+         
         } finally {
             if (doc != null) {
                 //fechamento do documento

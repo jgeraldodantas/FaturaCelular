@@ -17,15 +17,31 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import org.joda.time.PeriodType;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 /**
  *
  * @author geraldo.dantas
  */
 public class Tratamento {
+
+    public String conversaoHoraMinuto(String tempo){
+        String str = new String();
+        int hora,minuto,segundo,calc=0;
+                
+        hora = Integer.parseInt(tempo.split(":")[0]);
+        minuto = Integer.parseInt(tempo.split(":")[1]);
+        segundo = Integer.parseInt(tempo.split(":")[2]);
+        calc = minuto + (hora * 60);
+        
+        return Integer.toString(calc)+"m "+Integer.toString(segundo)+"s";
+    }
     
     public String converteCodificacaoArq(String caminho) throws FileNotFoundException, UnsupportedEncodingException, IOException{ 
         String dados = new String();
@@ -97,28 +113,55 @@ public class Tratamento {
         }        
         return tipo;
     }
-  
-    public String somaTempo(String v, String v2){
+
+    
+    public String somaTempo(String t1, String t2){            
+      
+        String[] tempo1, tempo2;
+        String total = new String();
+        int hora,minuto,segundo,h,m,s,resto = 0;
+        
+        tempo1 = t1.split(":");
+        tempo2 = t2.split(":");
+                
+        hora  = Integer.parseInt(tempo1[0]) + Integer.parseInt(tempo2[0]);
+        minuto = Integer.parseInt(tempo1[1]) + Integer.parseInt(tempo2[1]);
+        segundo = Integer.parseInt(tempo1[2]) + Integer.parseInt(tempo2[2]);
+        
+        s = segundo % 60;
+        resto = Math.abs(segundo/60);
+        
+        m = Math.abs((resto + minuto)%60);
+        resto = Math.abs((resto + minuto)/60);
+        
+        h = resto + hora;
+
+        total = Integer.toString(h)+":"+Integer.toString(m)+":"+Integer.toString(s);   
+        return total;  
+        
+     
+    /* 
         GregorianCalendar gc = new GregorianCalendar();   
   
-        int hora = Integer.parseInt(v.substring(0,2));
-        int min = Integer.parseInt(v.substring(3,5));
-        int seg = Integer.parseInt(v.substring(6,8));
-        
+        int hora = Integer.parseInt(t1.substring(0,2));
+        int min = Integer.parseInt(t1.substring(3,5));
+        int seg = Integer.parseInt(t1.substring(6,8));       
+                
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");   
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");   
         Time time = new Time(hora, min, seg);           
         gc.setTimeInMillis(time.getTime());   
         
-        hora = Integer.parseInt(v2.substring(0,2));
-        min = Integer.parseInt(v2.substring(3,5));
-        seg = Integer.parseInt(v2.substring(6,8));
+        hora = Integer.parseInt(t2.substring(0,2));
+        min = Integer.parseInt(t2.substring(3,5));
+        seg = Integer.parseInt(t2.substring(6,8));
         
         gc.add(Calendar.HOUR,hora);
         gc.add(Calendar.MINUTE,min);
         gc.add(Calendar.SECOND,seg);  
         
-        return sdf2.format(gc.getTime());
+        return sdf2.format(gc.getTime()); 
+    */    
     }
     
     public String trataTempo(String tempo) throws ParseException{
