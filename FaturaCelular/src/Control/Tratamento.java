@@ -138,8 +138,7 @@ public class Tratamento {
 
         total = Integer.toString(h)+":"+Integer.toString(m)+":"+Integer.toString(s);   
         return total;  
-        
-     
+             
     /* 
         GregorianCalendar gc = new GregorianCalendar();   
   
