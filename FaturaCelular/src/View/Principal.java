@@ -40,31 +40,19 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuAbreConta = new javax.swing.JMenu();
+        menuFatura = new javax.swing.JMenu();
+        menuRelatorioServicos = new javax.swing.JMenu();
+        menuPDF = new javax.swing.JMenu();
+        menuSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(200, 200));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
-
-        jButton1.setText("Abrir Conta");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Sair");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,81 +102,140 @@ public class Principal extends javax.swing.JFrame {
         tabela.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         jScrollPane1.setViewportView(tabela);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Sistema de Processamento de Conta Telefônica");
-
-        jButton3.setText("Relatório de Serviços");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+        jMenuBar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuBar1MouseClicked(evt);
             }
         });
 
-        jButton4.setText("Gerar PDF");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+        menuAbreConta.setText("  Abrir Fatura    ");
+        menuAbreConta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuAbreContaMouseClicked(evt);
             }
         });
+        jMenuBar1.add(menuAbreConta);
+
+        menuFatura.setText("Detalhes");
+        menuFatura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuFaturaMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuFatura);
+
+        menuRelatorioServicos.setText("Relatório de Serviços    ");
+        menuRelatorioServicos.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                menuRelatorioServicosMenuKeyPressed(evt);
+            }
+            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
+            }
+        });
+        menuRelatorioServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuRelatorioServicosMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuRelatorioServicos);
+
+        menuPDF.setText("Gerar PDF    ");
+        menuPDF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuPDFMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuPDF);
+
+        menuSair.setText("Sair    ");
+        menuSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSairMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuSair);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addGap(0, 593, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(270, 270, 270)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton2))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jMenuBar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuBar1MouseClicked
         // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jMenuBar1MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void menuFaturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuFaturaMouseClicked
         // TODO add your handling code here:        
         ProcessaArq arq = new ProcessaArq();
         ArrayList<Conta> lista = new ArrayList<Conta>();
         
+        if(arq.verificaConta()){
+            lista = arq.buscaBanco();
+            preencheTabelaOriginal(lista);
+        }
+        else{ JOptionPane.showMessageDialog(null,"Nenhuma conta selecionada"); }
+    }//GEN-LAST:event_menuFaturaMouseClicked
+
+    private void menuRelatorioServicosMenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_menuRelatorioServicosMenuKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuRelatorioServicosMenuKeyPressed
+
+    private void menuRelatorioServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatorioServicosMouseClicked
+        // TODO add your handling code here:
+        ProcessaArq arq = new ProcessaArq();
+        if(arq.verificaRelatorioServicos()){ preencheTabelaRelatorioServicos(arq.buscaRelatorioServicos()); }       
+        else{ JOptionPane.showMessageDialog(null,"Nenhuma conta selecionada"); }
+    }//GEN-LAST:event_menuRelatorioServicosMouseClicked
+
+    private void menuPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPDFMouseClicked
+        // TODO add your handling code here:
+        ProcessaArq arq = new ProcessaArq();
+        
+        if(arq.verificaConta() || arq.verificaRelatorioServicos()){
+            try {        
+                arq.gravaArquivo(arq.buscaRelatorioServicos(), this.caminho);
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{ JOptionPane.showMessageDialog(null,"Nenhuma conta selecionada"); }
+    }//GEN-LAST:event_menuPDFMouseClicked
+
+    private void menuSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSairMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_menuSairMouseClicked
+
+    private void menuAbreContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAbreContaMouseClicked
+        // TODO add your handling code here:
+        ProcessaArq arq = new ProcessaArq();
+        ArrayList<Conta> lista = new ArrayList<Conta>();
+                
         caminho = arq.localizaArquivo();
         try {
             arq.importaDados(caminho);
-                  
+
             lista = arq.buscaBanco();
             preencheTabelaOriginal(lista);
 
@@ -196,27 +243,8 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null,"Erro ao abrir o arquivo.\nCertifique-se que o arquivo está no formato correto");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        ProcessaArq arq = new ProcessaArq();        
-        preencheTabelaRelatorioServicos(arq.buscaRelatorioServicos());        
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        ProcessaArq arq = new ProcessaArq();
         
-        try {        
-            arq.gravaArquivo(arq.buscaRelatorioServicos(), this.caminho);
-        } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_menuAbreContaMouseClicked
 
 
     private void preencheTabelaOriginal(ArrayList<Conta> conta){
@@ -347,22 +375,25 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         
+        
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Principal().setVisible(true);
-                    
+                     
             }
         });
         
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenu menuAbreConta;
+    private javax.swing.JMenu menuFatura;
+    private javax.swing.JMenu menuPDF;
+    private javax.swing.JMenu menuRelatorioServicos;
+    private javax.swing.JMenu menuSair;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

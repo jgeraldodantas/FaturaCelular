@@ -223,5 +223,17 @@ public class ProcessaArq {
             Logger.getLogger(ProcessaArq.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
+    
+    public boolean verificaConta(){
+        boolean ok = false;
+        if(banco.getConta().size() > 1){ ok = true; }
+        return ok;
+    }
+    
+    public boolean verificaRelatorioServicos(){
+        boolean ok = false;
+        if(banco.getRelatorioServicos().size() > 1){ ok = true; }
+        return ok;
+    }
 
 }
