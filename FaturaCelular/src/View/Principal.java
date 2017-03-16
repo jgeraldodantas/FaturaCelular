@@ -110,7 +110,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        menuAbreConta.setText("  Abrir Fatura    ");
+        menuAbreConta.setText("*  Abrir Fatura    *");
         menuAbreConta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuAbreContaMouseClicked(evt);
@@ -118,7 +118,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuAbreConta);
 
-        menuFatura.setText("Detalhes    ");
+        menuFatura.setText("Detalhes    *");
         menuFatura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuFaturaMouseClicked(evt);
@@ -126,7 +126,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuFatura);
 
-        menuRelatorioServicos.setText("Relatório de Serviços    ");
+        menuRelatorioServicos.setText("Relatório de Serviços    *");
         menuRelatorioServicos.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
             public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
                 menuRelatorioServicosMenuKeyPressed(evt);
@@ -143,7 +143,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuRelatorioServicos);
 
-        menuPDF.setText("Gerar PDF    ");
+        menuPDF.setText("Gerar PDF    *");
         menuPDF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuPDFMouseClicked(evt);
@@ -151,7 +151,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuPDF);
 
-        menuSair.setText("Sair    ");
+        menuSair.setText("Sair    *");
         menuSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuSairMouseClicked(evt);

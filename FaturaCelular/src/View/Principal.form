@@ -9,7 +9,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menuAbreConta">
           <Properties>
-            <Property name="text" type="java.lang.String" value="  Abrir Fatura    "/>
+            <Property name="text" type="java.lang.String" value="*  Abrir Fatura    *"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuAbreContaMouseClicked"/>
@@ -17,7 +17,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuFatura">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Detalhes    "/>
+            <Property name="text" type="java.lang.String" value="Detalhes    *"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuFaturaMouseClicked"/>
@@ -25,7 +25,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuRelatorioServicos">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Servi&#xe7;os    "/>
+            <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Servi&#xe7;os    *"/>
           </Properties>
           <Events>
             <EventHandler event="menuKeyPressed" listener="javax.swing.event.MenuKeyListener" parameters="javax.swing.event.MenuKeyEvent" handler="menuRelatorioServicosMenuKeyPressed"/>
@@ -34,7 +34,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuPDF">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gerar PDF    "/>
+            <Property name="text" type="java.lang.String" value="Gerar PDF    *"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuPDFMouseClicked"/>
@@ -42,7 +42,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuSair">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Sair    "/>
+            <Property name="text" type="java.lang.String" value="Sair    *"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuSairMouseClicked"/>
