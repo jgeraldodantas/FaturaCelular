@@ -8,6 +8,7 @@ package View;
 import Banco.Banco;
 import Control.Conta;
 import Control.ProcessaArq;
+import Control.Tratamento;
 import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -100,6 +101,7 @@ public class Principal extends javax.swing.JFrame {
         tabela.setDropMode(javax.swing.DropMode.ON);
         tabela.setEnabled(false);
         tabela.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        tabela.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tabela);
 
         jMenuBar1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -116,7 +118,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuAbreConta);
 
-        menuFatura.setText("Detalhes");
+        menuFatura.setText("Detalhes    ");
         menuFatura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuFaturaMouseClicked(evt);
@@ -165,7 +167,7 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -233,15 +235,18 @@ public class Principal extends javax.swing.JFrame {
         ArrayList<Conta> lista = new ArrayList<Conta>();
                 
         caminho = arq.localizaArquivo();
-        try {
-            arq.importaDados(caminho);
+        if(caminho.isEmpty()){}
+        else{
+            try {
+                arq.importaDados(caminho);
 
-            lista = arq.buscaBanco();
-            preencheTabelaOriginal(lista);
+                lista = arq.buscaBanco();
+                preencheTabelaOriginal(lista);
 
-        } catch (ParseException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null,"Erro ao abrir o arquivo.\nCertifique-se que o arquivo está no formato correto");
+            } catch (ParseException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null,"Erro ao abrir o arquivo.\nCertifique-se que o arquivo está no formato correto");
+            }
         }
         
     }//GEN-LAST:event_menuAbreContaMouseClicked
@@ -326,21 +331,24 @@ public class Principal extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");               
         tabela.getTableHeader().setReorderingAllowed(false);          
         final DefaultTableModel dm = new DefaultTableModel(); 
+        Tratamento tempo = new Tratamento();
         tabela.setModel(dm);
         
         dm.addColumn("Item");
         dm.addColumn("Tipo");
         dm.addColumn("Descrição do Serviço");
         dm.addColumn("Duração");
+        dm.addColumn("Duração (minutos)");
         dm.addColumn("Valor");
         dm.addColumn("");
         
         tabela.getColumnModel().getColumn(0).setPreferredWidth(45);
         tabela.getColumnModel().getColumn(1).setPreferredWidth(200); 
         tabela.getColumnModel().getColumn(2).setPreferredWidth(400); 
-        tabela.getColumnModel().getColumn(3).setPreferredWidth(90); 
-        tabela.getColumnModel().getColumn(4).setPreferredWidth(90); 
-        tabela.getColumnModel().getColumn(5).setPreferredWidth(150); 
+        tabela.getColumnModel().getColumn(3).setPreferredWidth(80); 
+        tabela.getColumnModel().getColumn(4).setPreferredWidth(115); 
+        tabela.getColumnModel().getColumn(5).setPreferredWidth(90); 
+        tabela.getColumnModel().getColumn(6).setPreferredWidth(0); 
         
         for(int a=0;a < conta.size();a++){   
             dm.addRow(new Object[]{null, null, null});
@@ -348,8 +356,9 @@ public class Principal extends javax.swing.JFrame {
             tabela.setValueAt(conta.get(a).getTipo(), a, 1);                   
             tabela.setValueAt(conta.get(a).getDescricaoServico(), a, 2);        
             tabela.setValueAt(conta.get(a).getDuracao(), a, 3);       
-            tabela.setValueAt("R$"+df.format(conta.get(a).getValor()), a, 4);  
-            tabela.setValueAt("", a, 5);  
+            tabela.setValueAt(tempo.conversaoHoraMinuto(conta.get(a).getDuracao()), a, 4);       
+            tabela.setValueAt("R$"+df.format(conta.get(a).getValor()), a, 5);  
+            tabela.setValueAt("", a, 6);  
         }           
         
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

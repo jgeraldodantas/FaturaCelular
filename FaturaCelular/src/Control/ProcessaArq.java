@@ -209,10 +209,10 @@ public class ProcessaArq {
         int escolha = 0;
         String arquivo = new String();        
         JFileChooser chooserArquivo = new JFileChooser();
-        
-        escolha = chooserArquivo.showOpenDialog(chooserArquivo);
-        arquivo = chooserArquivo.getSelectedFile().getAbsolutePath();
                 
+        escolha = chooserArquivo.showOpenDialog(chooserArquivo);
+        if ( escolha == JFileChooser.CANCEL_OPTION ){ arquivo = ""; }
+        else{ arquivo = chooserArquivo.getSelectedFile().getAbsolutePath(); }   
         return arquivo;        
     }    
         
