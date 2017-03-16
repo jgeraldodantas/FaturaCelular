@@ -110,7 +110,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        menuAbreConta.setText("*  Abrir Fatura    *");
+        menuAbreConta.setText("  Abrir Fatura    *");
         menuAbreConta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuAbreContaMouseClicked(evt);

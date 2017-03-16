@@ -9,7 +9,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menuAbreConta">
           <Properties>
-            <Property name="text" type="java.lang.String" value="*  Abrir Fatura    *"/>
+            <Property name="text" type="java.lang.String" value="  Abrir Fatura    *"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuAbreContaMouseClicked"/>
