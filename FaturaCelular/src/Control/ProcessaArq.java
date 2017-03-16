@@ -115,8 +115,7 @@ public class ProcessaArq {
                             p = new Paragraph(new Phrase(lineSpacing,informacao,FontFactory.getFont(FontFactory.COURIER, fntSize)));
                             doc.add(p);
                         }
-                    } 
-                    
+                    }                     
                     
                     listaTipos.add(tipo);                    
                     valorTotal += soma;   
