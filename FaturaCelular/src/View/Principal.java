@@ -213,7 +213,7 @@ public class Principal extends javax.swing.JFrame {
         ProcessaArq arq = new ProcessaArq();
         
         if(arq.verificaConta() || arq.verificaRelatorioServicos()){
-            try {        
+            try {     
                 arq.gravaArquivo(arq.buscaRelatorioServicos(), this.caminho);
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -234,7 +234,7 @@ public class Principal extends javax.swing.JFrame {
         ProcessaArq arq = new ProcessaArq();
         ArrayList<Conta> lista = new ArrayList<Conta>();
                 
-        caminho = arq.localizaArquivo();
+        caminho = arq.localizaArquivo(true);
         if(caminho.isEmpty()){}
         else{
             try {

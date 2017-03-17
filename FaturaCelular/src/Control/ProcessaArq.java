@@ -67,11 +67,133 @@ public class ProcessaArq {
         String informacao, tempoServico, tempoSubTotal, tempoTotal, tipo = new String();
         Double soma, valorTotal = 0.0;      
         
+        PdfPTable table = new PdfPTable(3);
+    //    table.getDefaultCell().setBorder(PdfPCell.NO_BORDER); // Aqui eu tiro a borda
+    //    table.addCell(new Paragraph());
         
-        local = caminho.split(".CSV");         
-        caminho = local[0]+".pdf";        
-        try {//configurações da página
-          
+        
+        caminho = localizaArquivo(false)+".pdf";        
+        try {//configurações da página          
+            float fntSize, lineSpacing;
+            fntSize = 10f;
+            lineSpacing = 10f;
+            doc = new Document(PageSize.A4.rotate(), 50, 50, 50, 50);
+            
+            os = new FileOutputStream(caminho);            
+            PdfWriter.getInstance(doc, os);            
+            doc.open();
+                                    
+            tempoTotal = "00:00:00";  
+            tempoServico = "00:00:00";    
+            tempoSubTotal = "00:00:00";  
+            listaTipos = new ArrayList<String>();
+            for(int a=0;a<lista.size()-1;a++){
+                
+                if(!listaTipos.contains(lista.get(a).getTipo())){
+                    
+                    listaTipos.add(lista.get(a).getTipo());                                            
+                    soma = 0.0;          
+                    tipo = new String();
+                    informacao = new String();  
+                    
+                    table.getDefaultCell().setBorder(0);
+                    informacao = "**** "+listaTipos.get(listaTipos.size()-1)+" ****";   
+                    
+                    table.getDefaultCell().setBorder(1);
+                    table.addCell(new Paragraph(informacao));
+                    table.addCell(new Paragraph("       "));
+                    table.addCell(new Paragraph("       "));
+                    table.getDefaultCell().setBorder(0);
+                    
+                                        
+                    for(int b=0;b<=lista.size()-1;b++){
+                        if( lista.get(b).getTipo().equals(listaTipos.get(listaTipos.size()-1)) ){
+                    
+                            soma += lista.get(b).getValor();
+                            tempoServico = tempo.somaTempo(lista.get(b).getDuracao(),tempoServico);
+                            tempoSubTotal = tempo.somaTempo(tempoServico,tempoSubTotal);
+                            tempoTotal = tempo.somaTempo(tempoServico,tempoTotal);
+                            tipo = listaTipos.get(listaTipos.size()-1);  
+                            
+                            informacao = new String();
+                            informacao = lista.get(b).getDescricaoServico();
+                            table.setTotalWidth(80);
+                            table.addCell(new Paragraph(informacao));        
+                                    
+                            informacao = new String();
+                            informacao = tempoServico +" ("+  tempo.conversaoHoraMinuto(tempoServico)+")"; 
+                            table.setTotalWidth(30);
+                            table.addCell(new Paragraph(informacao));                    
+                                                   
+                            informacao = new String();                                 
+                            informacao = "R$"+ df.format(lista.get(b).getValor());
+                            table.setTotalWidth(20);
+                            table.addCell(new Paragraph(informacao)); 
+                            
+                            tempoServico = "00:00:00";                                 
+                            System.out.println(informacao);                                 
+                        }
+                    }                     
+                    
+                    listaTipos.add(tipo);                    
+                    valorTotal += soma;   
+                    
+                    table.getDefaultCell().setBorder(1);
+                    informacao = new String();
+                    informacao = "Sub Total:";
+                    table.addCell(informacao);
+                    
+                    informacao = new String();
+                    informacao = tempoSubTotal +" ("+ tempo.conversaoHoraMinuto(tempoSubTotal)+")";                    
+                    table.addCell(informacao);
+                    
+                    informacao = new String();
+                    informacao = "R$"+ df.format(soma);
+                    table.addCell(informacao);
+                    
+                    table.getDefaultCell().setBorder(1);
+                    table.addCell(new Paragraph("       "));
+                    table.addCell(new Paragraph("       "));
+                    table.addCell(new Paragraph("       "));
+                    table.getDefaultCell().setBorder(0);
+                    table.addCell(new Paragraph("       "));
+                    table.addCell(new Paragraph("       "));
+                    table.addCell(new Paragraph("       "));
+                                    
+                    tempoSubTotal = "00:00:00";                    
+                    System.out.println(informacao);   
+                }       
+            }
+            
+            informacao = new String();
+            informacao = "Total Geral:  ";
+            table.addCell(informacao);
+            
+            informacao = new String();
+            informacao = tempoTotal +" ("+ tempo.conversaoHoraMinuto(tempoTotal) +")";            
+            table.addCell(informacao);
+            
+            informacao = new String();
+            informacao = "R$"+df.format(valorTotal);
+            table.addCell(informacao);
+            
+            doc.add(table);
+            System.out.println(informacao);
+         
+        } finally {
+            if (doc != null) {
+                //fechamento do documento
+                doc.close();
+            }
+            if (os != null) {
+               //fechamento da stream de saída
+               os.close();
+            }
+        }
+     
+    /*        
+        caminho = localizaArquivo(false)+".pdf";        
+        try {//configurações da página          
             float fntSize, lineSpacing;
             fntSize = 10f;
             lineSpacing = 10f;
@@ -146,6 +268,7 @@ public class ProcessaArq {
                os.close();
             }
         }
+    */
     }
 
     
@@ -205,23 +328,24 @@ public class ProcessaArq {
                
     };
     
-    public String localizaArquivo(){
+    public String localizaArquivo(boolean opc){
         int escolha = 0;
         String arquivo = new String();        
         JFileChooser chooserArquivo = new JFileChooser();
-                
-        escolha = chooserArquivo.showOpenDialog(chooserArquivo);
+        
+        // TRUE = Abrir arquivo / FALSE = salvar arquivo
+        if(opc){ escolha = chooserArquivo.showOpenDialog(chooserArquivo); }
+        else{ escolha = chooserArquivo.showSaveDialog(chooserArquivo); }
+        
         if ( escolha == JFileChooser.CANCEL_OPTION ){ arquivo = ""; }
         else{ arquivo = chooserArquivo.getSelectedFile().getAbsolutePath(); }   
+        
         return arquivo;        
     }    
         
     public void processamento(){
-        try {
-            importaDados(localizaArquivo());
-        } catch (ParseException ex) {
-            Logger.getLogger(ProcessaArq.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        try { importaDados(localizaArquivo(true)); } 
+        catch (ParseException ex) { Logger.getLogger(ProcessaArq.class.getName()).log(Level.SEVERE, null, ex); }        
     }
     
     public boolean verificaConta(){
