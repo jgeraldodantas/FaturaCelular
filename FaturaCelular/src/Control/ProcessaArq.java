@@ -177,7 +177,7 @@ public class ProcessaArq {
                     table.getDefaultCell().setBorder(0);
                                     
                     tempoSubTotal = "00:00:00";                    
-                    System.out.println(informacao);   
+                //    System.out.println(informacao);   
                 }       
             }
             // fim da página
