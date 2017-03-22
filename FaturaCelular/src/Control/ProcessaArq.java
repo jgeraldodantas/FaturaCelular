@@ -97,10 +97,10 @@ public class ProcessaArq {
                     tipo = new String();
                     informacao = new String();  
                     
+                    //cabecalho da tabela
                     table.getDefaultCell().setBorder(0);
                     table.getWidthPercentage();
-                    informacao = "**** "+listaTipos.get(listaTipos.size()-1)+" ****";   
-                    
+                    informacao = "* * * * * "+listaTipos.get(listaTipos.size()-1)+" * * * * *";                     
                     table.getDefaultCell().setBorder(1);
                     table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                     table.getDefaultCell().setColspan(3);
@@ -112,8 +112,10 @@ public class ProcessaArq {
                     table.getDefaultCell().setColspan(0);
                     table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);
                     table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+                                     
                     
-                                        
+                    
+                    // conteúdo da tabela
                     for(int b=0;b<=lista.size()-1;b++){
                         if( lista.get(b).getTipo().equals(listaTipos.get(listaTipos.size()-1)) ){
                     
@@ -142,52 +144,59 @@ public class ProcessaArq {
                             System.out.println(informacao);                                 
                         }
                     }                     
-                    
+                    //rodapé da tabela
                     listaTipos.add(tipo);                    
                     valorTotal += soma;   
-                     
+                    
+                    
+                    // subtotal
                     table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
                     informacao = new String();
                     informacao = "Sub Total:";                    
                     table.addCell(informacao);
                     
+                    // tempo
                     informacao = new String();
                     informacao = tempoSubTotal +" ("+ tempo.conversaoHoraMinuto(tempoSubTotal)+")";                 
                     table.addCell(informacao);
                     
+                    // valor
                     informacao = new String();
                     informacao = "R$"+ df.format(soma);
                     table.addCell(informacao);
                     table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);
                     
-                    table.getDefaultCell().setBorder(1);
                     
+                    // espaço entre tabelas
+                    table.getDefaultCell().setBorder(1);
                     table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                     table.getDefaultCell().setColspan(3);
-                    table.addCell(new Paragraph("   * * * * *   "));
+                    table.addCell(new Paragraph("* * * * *"));
                     table.getDefaultCell().setColspan(0);
-                    table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-                    
+                    table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);                    
                     table.getDefaultCell().setBorder(0);
                                     
                     tempoSubTotal = "00:00:00";                    
                     System.out.println(informacao);   
                 }       
             }
+            // fim da página
             
+            // valor total
             informacao = new String();
-            informacao = "Total Geral:  ";
-            
+            informacao = "Total Geral:  ";            
             table.getDefaultCell().setBorder(1);
             table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
             table.addCell(informacao);
             table.getDefaultCell().setBorder(1);
             
+            // tempo
             informacao = new String();
             informacao = tempoTotal +" ("+ tempo.conversaoHoraMinuto(tempoTotal) +")";            
             table.addCell(informacao);
-            table.addCell(new Paragraph("   * * * * *   "));
+            table.addCell(new Paragraph("* * * * *"));
             
+            //valor
             informacao = new String();
             informacao = "R$"+df.format(valorTotal);
             table.addCell(informacao);
@@ -204,86 +213,7 @@ public class ProcessaArq {
                //fechamento da stream de saída
                os.close();
             }
-        }
-     
-    /*        
-        caminho = localizaArquivo(false)+".pdf";        
-        try {//configurações da página          
-            float fntSize, lineSpacing;
-            fntSize = 10f;
-            lineSpacing = 10f;
-            doc = new Document(PageSize.A4.rotate(), 50, 50, 50, 50);
-            
-            os = new FileOutputStream(caminho);            
-            PdfWriter.getInstance(doc, os);            
-            doc.open();
-                                    
-            tempoTotal = "00:00:00";  
-            tempoServico = "00:00:00";    
-            tempoSubTotal = "00:00:00";  
-            listaTipos = new ArrayList<String>();
-            for(int a=0;a<lista.size()-1;a++){
-                
-                if(!listaTipos.contains(lista.get(a).getTipo())){
-                    
-                    listaTipos.add(lista.get(a).getTipo());                                            
-                    soma = 0.0;          
-                    tipo = new String();
-                    informacao = new String();  
-                    
-                    informacao = "**** "+listaTipos.get(listaTipos.size()-1)+" ****";
-                    p = new Paragraph(new Phrase(lineSpacing,informacao,FontFactory.getFont(FontFactory.COURIER, fntSize)));
-                    doc.add(p);  
-                    
-                    for(int b=0;b<=lista.size()-1;b++){
-                        if( lista.get(b).getTipo().equals(listaTipos.get(listaTipos.size()-1)) ){
-                    
-                            soma += lista.get(b).getValor();
-                            tempoServico = tempo.somaTempo(lista.get(b).getDuracao(),tempoServico);
-                            tempoSubTotal = tempo.somaTempo(tempoServico,tempoSubTotal);
-                            tempoTotal = tempo.somaTempo(tempoServico,tempoTotal);
-                            tipo = listaTipos.get(listaTipos.size()-1);  
-                            
-                            informacao = new String();
-                            informacao = lista.get(b).getDescricaoServico() +"      "+ tempoServico +" = "+  tempo.conversaoHoraMinuto(tempoServico) +"      R$"+ df.format(lista.get(b).getValor());
-                            tempoServico = "00:00:00";     
-                            
-                            System.out.println(informacao);                
-                            p = new Paragraph(new Phrase(lineSpacing,informacao,FontFactory.getFont(FontFactory.COURIER, fntSize)));
-                            doc.add(p);
-                        }
-                    }                     
-                    
-                    listaTipos.add(tipo);                    
-                    valorTotal += soma;   
-                    
-                    informacao = new String();
-                    informacao = "Sub Total:      "+  tempoSubTotal +" = "+ tempo.conversaoHoraMinuto(tempoSubTotal)  +"      R$"+ df.format(soma) +"\n\n\n";
-                    tempoSubTotal = "00:00:00";
-                    
-                    System.out.println(informacao);                
-                    p = new Paragraph(new Phrase(lineSpacing,informacao,FontFactory.getFont(FontFactory.COURIER, fntSize)));
-                    doc.add(p);   
-                }       
-            }
-            
-            informacao = new String();
-            informacao = "Total Geral:  "+ tempoTotal +" = "+ tempo.conversaoHoraMinuto(tempoTotal) +"  R$"+df.format(valorTotal);
-            p = new Paragraph(new Phrase(lineSpacing,informacao,FontFactory.getFont(FontFactory.COURIER, fntSize)));
-            doc.add(p);
-            System.out.println(informacao);
-         
-        } finally {
-            if (doc != null) {
-                //fechamento do documento
-                doc.close();
-            }
-            if (os != null) {
-               //fechamento da stream de saída
-               os.close();
-            }
-        }
-    */
+        }     
     }
 
     
