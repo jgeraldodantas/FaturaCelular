@@ -6,6 +6,7 @@
 package Control;
 
 import Banco.Banco;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -67,9 +68,9 @@ public class ProcessaArq {
         String informacao, tempoServico, tempoSubTotal, tempoTotal, tipo = new String();
         Double soma, valorTotal = 0.0;      
         
-        PdfPTable table = new PdfPTable(3);
-    //    table.getDefaultCell().setBorder(PdfPCell.NO_BORDER); // Aqui eu tiro a borda
-    //    table.addCell(new Paragraph());
+        PdfPTable table = new PdfPTable(3); //tabela com 3 colunas
+        float[] headerwidths = { 85, 35, 25 }; // define a largura de cada coluna
+        table.setWidths(headerwidths);
         
         
         caminho = localizaArquivo(false)+".pdf";        
@@ -77,7 +78,7 @@ public class ProcessaArq {
             float fntSize, lineSpacing;
             fntSize = 10f;
             lineSpacing = 10f;
-            doc = new Document(PageSize.A4.rotate(), 50, 50, 50, 50);
+            doc = new Document(PageSize.A4.rotate(), 10, 10, 20, 10);
             
             os = new FileOutputStream(caminho);            
             PdfWriter.getInstance(doc, os);            
@@ -97,13 +98,20 @@ public class ProcessaArq {
                     informacao = new String();  
                     
                     table.getDefaultCell().setBorder(0);
+                    table.getWidthPercentage();
                     informacao = "**** "+listaTipos.get(listaTipos.size()-1)+" ****";   
                     
                     table.getDefaultCell().setBorder(1);
+                    table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+                    table.getDefaultCell().setColspan(3);
+                    table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);
+               
                     table.addCell(new Paragraph(informacao));
-                    table.addCell(new Paragraph("       "));
-                    table.addCell(new Paragraph("       "));
-                    table.getDefaultCell().setBorder(0);
+                    
+                    table.getDefaultCell().setBorder(1);
+                    table.getDefaultCell().setColspan(0);
+                    table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);
+                    table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                     
                                         
                     for(int b=0;b<=lista.size()-1;b++){
@@ -137,28 +145,30 @@ public class ProcessaArq {
                     
                     listaTipos.add(tipo);                    
                     valorTotal += soma;   
-                    
-                    table.getDefaultCell().setBorder(1);
+                     
+                    table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
                     informacao = new String();
-                    informacao = "Sub Total:";
+                    informacao = "Sub Total:";                    
                     table.addCell(informacao);
                     
                     informacao = new String();
-                    informacao = tempoSubTotal +" ("+ tempo.conversaoHoraMinuto(tempoSubTotal)+")";                    
+                    informacao = tempoSubTotal +" ("+ tempo.conversaoHoraMinuto(tempoSubTotal)+")";                 
                     table.addCell(informacao);
                     
                     informacao = new String();
                     informacao = "R$"+ df.format(soma);
                     table.addCell(informacao);
+                    table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);
                     
                     table.getDefaultCell().setBorder(1);
-                    table.addCell(new Paragraph("       "));
-                    table.addCell(new Paragraph("       "));
-                    table.addCell(new Paragraph("       "));
+                    
+                    table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+                    table.getDefaultCell().setColspan(3);
+                    table.addCell(new Paragraph("   * * * * *   "));
+                    table.getDefaultCell().setColspan(0);
+                    table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+                    
                     table.getDefaultCell().setBorder(0);
-                    table.addCell(new Paragraph("       "));
-                    table.addCell(new Paragraph("       "));
-                    table.addCell(new Paragraph("       "));
                                     
                     tempoSubTotal = "00:00:00";                    
                     System.out.println(informacao);   
@@ -167,11 +177,16 @@ public class ProcessaArq {
             
             informacao = new String();
             informacao = "Total Geral:  ";
+            
+            table.getDefaultCell().setBorder(1);
+            table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
             table.addCell(informacao);
+            table.getDefaultCell().setBorder(1);
             
             informacao = new String();
             informacao = tempoTotal +" ("+ tempo.conversaoHoraMinuto(tempoTotal) +")";            
             table.addCell(informacao);
+            table.addCell(new Paragraph("   * * * * *   "));
             
             informacao = new String();
             informacao = "R$"+df.format(valorTotal);
