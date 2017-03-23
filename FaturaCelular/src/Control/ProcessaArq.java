@@ -168,6 +168,7 @@ public class ProcessaArq {
                     
                     
                     // espaço entre tabelas
+                    
                     table.getDefaultCell().setBorder(1);
                     table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                     table.getDefaultCell().setColspan(3);
@@ -194,7 +195,6 @@ public class ProcessaArq {
             informacao = new String();
             informacao = tempoTotal +" ("+ tempo.conversaoHoraMinuto(tempoTotal) +")";            
             table.addCell(informacao);
-            table.addCell(new Paragraph("* * * * *"));
             
             //valor
             informacao = new String();
