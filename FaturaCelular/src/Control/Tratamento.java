@@ -32,7 +32,7 @@ import org.joda.time.format.PeriodFormatterBuilder;
 public class Tratamento {
 
     public String conversaoHoraMinuto(String tempo){
-        String str = new String();
+        String str,m,s = new String();
         int hora,minuto,segundo,calc=0;
                 
         hora = Integer.parseInt(tempo.split(":")[0]);
@@ -40,7 +40,14 @@ public class Tratamento {
         segundo = Integer.parseInt(tempo.split(":")[2]);
         calc = minuto + (hora * 60);
         
-        return Integer.toString(calc)+"m "+Integer.toString(segundo)+"s";
+        // tartamento para garantir a entrega do tempo no formato 00m 00s
+        if(calc<10){m = "0" + Integer.toString(calc) + "m "; }
+        else{m = Integer.toString(calc) + "m "; }
+        
+        if(segundo<10){s = "0" + Integer.toString(segundo) + "s"; }
+        else{s = Integer.toString(segundo) + "s"; }
+        
+        return m + s;
     }
     
     public String converteCodificacaoArq(String caminho) throws FileNotFoundException, UnsupportedEncodingException, IOException{ 
@@ -135,32 +142,20 @@ public class Tratamento {
         resto = Math.abs((resto + minuto)/60);
         
         h = resto + hora;
-
-        total = Integer.toString(h)+":"+Integer.toString(m)+":"+Integer.toString(s);   
-        return total;  
-             
-    /* 
-        GregorianCalendar gc = new GregorianCalendar();   
-  
-        int hora = Integer.parseInt(t1.substring(0,2));
-        int min = Integer.parseInt(t1.substring(3,5));
-        int seg = Integer.parseInt(t1.substring(6,8));       
-                
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");   
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");   
-        Time time = new Time(hora, min, seg);           
-        gc.setTimeInMillis(time.getTime());   
         
-        hora = Integer.parseInt(t2.substring(0,2));
-        min = Integer.parseInt(t2.substring(3,5));
-        seg = Integer.parseInt(t2.substring(6,8));
+        // tartamento para garantir a entrega do tempo no formato 00:00:00
+        tempo1 = new String[3];
+        if(h<10){tempo1[0] = "0" + Integer.toString(h); }
+        else{tempo1[0] = Integer.toString(h); }
         
-        gc.add(Calendar.HOUR,hora);
-        gc.add(Calendar.MINUTE,min);
-        gc.add(Calendar.SECOND,seg);  
+        if(m<10){tempo1[1] = "0" + Integer.toString(m); }
+        else{tempo1[1] = Integer.toString(m); }
         
-        return sdf2.format(gc.getTime()); 
-    */    
+        if(s<10){tempo1[2] = "0" + Integer.toString(2); }
+        else{tempo1[2] = Integer.toString(s); }
+        
+        total = tempo1[0]+":"+tempo1[1]+":"+tempo1[2];   
+        return total;   
     }
     
     public String trataTempo(String tempo) throws ParseException{
@@ -172,6 +167,7 @@ public class Tratamento {
             tempo = tempo.replace("m", "");
             tempo = tempo.replace("s", "");
         }
+        
         else {tempo = "00:00:00";}
            
     //    duracao = horario.parse(tempo);
