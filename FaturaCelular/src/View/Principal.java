@@ -47,7 +47,9 @@ public class Principal extends javax.swing.JFrame {
         menuAbreConta = new javax.swing.JMenu();
         menuFatura = new javax.swing.JMenu();
         menuRelatorioServicos = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
         menuPDF = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -143,13 +145,25 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuRelatorioServicos);
 
-        menuPDF.setText("Gerar PDF    *");
+        jMenu1.setText("Relatório    *");
+
+        menuPDF.setText("Serviços");
         menuPDF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuPDFMouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuPDF);
+        jMenu1.add(menuPDF);
+
+        jMenuItem1.setText("Consumo por linhas");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
 
         menuSair.setText("Sair    *");
         menuSair.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -238,7 +252,7 @@ public class Principal extends javax.swing.JFrame {
         if(caminho.isEmpty()){}
         else{
             try {
-                arq.importaDados(caminho);
+                arq.importaDadosFatura(caminho);
 
                 lista = arq.buscaBanco();
                 preencheTabelaOriginal(lista);
@@ -250,6 +264,16 @@ public class Principal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_menuAbreContaMouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 
     private void preencheTabelaOriginal(ArrayList<Conta> conta){
@@ -396,7 +420,9 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuAbreConta;
     private javax.swing.JMenu menuFatura;

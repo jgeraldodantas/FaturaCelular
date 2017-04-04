@@ -103,11 +103,17 @@ public class Tratamento {
         return texto;
     }
    
-    public String retornaTipo(int t){
+    public String retornaTipo(int t, String destino){
         String tipo = new String();
         
         switch(t){
-            case 0:  case 1:  case 2:  case 3:  { tipo = "Roaming"; break; }
+            case 0:  case 1:  case 2:  case 3:  {                 
+                if(destino.equals("DDD 035")){ tipo = "Roaming VC1"; break; }
+                else{                   
+                     if(destino.contains("DDD 03")){ tipo = "Roaming VC2"; break; }
+                     else{ tipo = "Roaming VC3"; break; }               
+                }         
+            }
             case 4:  case 5:  case 6:  case 7:  { tipo = "VC1"; break; }
             case 8:  case 9:  case 10: case 11: { tipo = "VC2"; break; }
             case 12: case 13: case 14: case 15: { tipo = "VC3"; break; }
@@ -117,7 +123,8 @@ public class Tratamento {
             case 21: case 22: case 23: case 24:{ tipo = "Não Específico"; break; }
             case 25: case 26: { tipo = "Ligações Recebidas à Cobrar"; break; }
             case 27: case 28: { tipo = "Indeterminado na fatura"; break; }
-        }        
+        }
+        System.out.println(tipo);
         return tipo;
     }
 
@@ -178,6 +185,14 @@ public class Tratamento {
         Double valor = 0.0;         
         valor = Double.parseDouble(v17.replace(",","."));        
         return valor;
+    }
+    
+    public String verificaRoaming(){
+        String tipo = new String();
+        
+        
+        
+        return tipo;
     }
     
     public String verificaSeparador(String linha){

@@ -6,6 +6,7 @@
 package Control;
 
 import Banco.Banco;
+import Banco.Usuario;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -88,7 +89,10 @@ public class ProcessaArq {
             tempoServico = "00:00:00";    
             tempoSubTotal = "00:00:00";  
             listaTipos = new ArrayList<String>();
+            
             for(int a=0;a<lista.size()-1;a++){
+                System.out.println(a+" - "+lista.get(a).getTipo());
+                
                 
                 if(!listaTipos.contains(lista.get(a).getTipo())){
                     
@@ -124,7 +128,7 @@ public class ProcessaArq {
                             tempoSubTotal = tempo.somaTempo(tempoServico,tempoSubTotal);
                             tempoTotal = tempo.somaTempo(tempoServico,tempoTotal);
                             tipo = listaTipos.get(listaTipos.size()-1);  
-                            
+                     
                             informacao = new String();
                             informacao = lista.get(b).getDescricaoServico();
                             table.setTotalWidth(80);
@@ -141,7 +145,7 @@ public class ProcessaArq {
                             table.addCell(new Paragraph(informacao)); 
                             
                             tempoServico = "00:00:00";                                 
-                            System.out.println(informacao);                                 
+                        //    System.out.println(informacao);                                 
                         }
                     }                     
                     //rodapé da tabela
@@ -219,7 +223,7 @@ public class ProcessaArq {
     
     
     
-    public void importaDados(String caminho) throws ParseException{
+    public void importaDadosFatura(String caminho) throws ParseException{
         Tratamento item = new Tratamento();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");  
                 
@@ -273,6 +277,70 @@ public class ProcessaArq {
                
     };
     
+    
+    
+    /*
+    public void importaDadosUsuarios(){
+        Tratamento item = new Tratamento();
+        String caminho = "src\\Banco\\usuarios.csv";
+            
+        try{
+            int cont = 0;
+            Double valor = 0.0;
+            String[] vetor = new String[20];
+            String separador = new String();
+            String linha = new String();
+            Usuario user = new Usuario();  
+            BufferedReader arq = new BufferedReader(new InputStreamReader(new FileInputStream(caminho),"ISO-8859-1")); 
+                                                   
+            separador = item.verificaSeparador(arq.readLine());
+            while(arq.ready()){         
+                user = new Usuario(); 
+                vetor = new String[20];
+                
+                linha = item.removeCaracteres(arq.readLine());
+                linha = linha+separador;           
+                vetor = linha.split(separador,-1);   
+                 
+               
+                dados.setNumConta(Long.parseLong(vetor[0]));
+                dados.setTelefoneOrigem(Long.parseLong(vetor[1]));
+                dados.setDetalheServico(vetor[2]);
+                dados.setDescricaoServico(item.removeEspaco(vetor[3])+" ");
+                dados.setDestinoServico(item.removeEspaco(vetor[4]));     
+                dados.setDataLigacao(vetor[5]);  
+                dados.setHoraInicio(sdf.parse(item.trataTempo(vetor[6])));   
+                dados.setDestino(vetor[7]);
+                dados.setTelefoneChamado(vetor[8]);
+                dados.setTarifa(vetor[9]);
+                dados.setDuracao(item.trataTempo(vetor[10]));
+                dados.setOperadoraDestino(vetor[11]);                    
+                dados.setOrigem(vetor[12]);
+                dados.setTipoChamada(vetor[13]);
+                dados.setServico(vetor[14]);
+                dados.setUnidade(vetor[15]);
+                dados.setReferencia(vetor[16]);                             
+                dados.setValor(item.trataValor(vetor[17]));
+                banco.cadastro(dados);
+                 
+                valor += dados.getValor();                
+                cont++;
+            }
+            arq.close();
+                        
+        }catch(IOException ioe){
+                ioe.printStackTrace();
+                JOptionPane.showMessageDialog(null,"Erro ao abrir o arquivo.\nCertifique-se que o arquivo está no formato correto");
+        } 
+    }
+    
+    */
+    
+    
+    
+    
+    
+    
     public String localizaArquivo(boolean opc){
         int escolha = 0;
         String arquivo = new String();        
@@ -289,7 +357,7 @@ public class ProcessaArq {
     }    
         
     public void processamento(){
-        try { importaDados(localizaArquivo(true)); } 
+        try { importaDadosFatura(localizaArquivo(true)); } 
         catch (ParseException ex) { Logger.getLogger(ProcessaArq.class.getName()).log(Level.SEVERE, null, ex); }        
     }
     

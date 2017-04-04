@@ -23,15 +23,18 @@ public class Banco {
     
     private ArrayList<Conta> conta;
     private ArrayList<Conta> relatorioServicos;
+    private ArrayList<Usuario> usuarios;
 
     public Banco() {
         this.conta = new ArrayList<Conta>();
         this.relatorioServicos = new ArrayList<Conta>();
+        this.usuarios = new ArrayList<Usuario>();
     }
         
-    public Banco(ArrayList<Conta> conta, ArrayList<Conta> relatorioServicos) {
+    public Banco(ArrayList<Conta> conta, ArrayList<Conta> relatorioServicos, ArrayList<Usuario> usuario) {
         this.conta = conta;
         this.relatorioServicos = relatorioServicos;
+        this.usuarios = usuario;
     }
                     
     public void cadastro(Conta dados){
@@ -46,11 +49,12 @@ public class Banco {
         
         
         for(int a=0; a < lista.size();a++){
-            if(lista.get(a).getDescricaoServico().equals(descricao)){   
+            if(lista.get(a).getDescricaoServico().equals(descricao) && lista.get(a).getTipo().equals(tipo)){   
                resumo = new Conta();
                resumo.setDuracao(tempo.somaTempo(this.conta.get(indexConta).getDuracao(), lista.get(a).getDuracao()));
                resumo.setValor(this.conta.get(indexConta).getValor() + lista.get(a).getValor());
                resumo.setDescricaoServico(descricao);
+               
                resumo.setTipo(tipo);
                lista.set(a,resumo); 
                ok = true;
@@ -63,19 +67,22 @@ public class Banco {
             resumo.setDuracao(tempo.somaTempo(this.conta.get(indexConta).getDuracao(), lista.get(0).getDuracao()));
             resumo.setValor(this.conta.get(indexConta).getValor());          
             resumo.setDescricaoServico(descricao);   
+               
             resumo.setTipo(tipo);
             lista.add(resumo);                    
-        }            
+        }          
+        
         return lista;
     }
       
     public ArrayList<Conta> recuperaDados(){
        return this.conta;
     }
-    
+        
     public void relatorioServicos(){
         String descricao;
         String tipo;
+        String areaDestino;
         Conta servico = new Conta();
         Tratamento item = new Tratamento(); 
         ArrayList<Conta> listaFatura = new ArrayList<Conta>();
@@ -96,7 +103,9 @@ public class Banco {
             int indiceRelatorio = 0;
             tipo = new String();
             descricao = new String();
+            areaDestino = new String();
             
+            areaDestino = this.conta.get(indiceConta).getDestino();
             descricao = this.conta.get(indiceConta).getDescricaoServico() + this.conta.get(indiceConta).getDestinoServico();
             descricao.trim();
             
@@ -104,113 +113,117 @@ public class Banco {
                 // ****************************** Cobrança tipo Roaming ******************************
                 case "Ligacoes de Longa Distancia Para Celulares Vivo":{  
                     indiceRelatorio = 0;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    System.out.println(listaFatura.get(0).getTipo());
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Celulares de Outras Operadoras":{   
                     indiceRelatorio = 1;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    System.out.println(listaFatura.get(0).getTipo());
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Fixo Vivo":{     
                     indiceRelatorio = 2;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    System.out.println(listaFatura.get(0).getTipo());
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Fixo de Outras Operadoras":{ 
                     indiceRelatorio = 3;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    System.out.println(listaFatura.get(0).getTipo());
                     break;
                 }
                                                 
                 // ****************************** Cobrança tipo VC1 ******************************
                 case "Ligacoes Locais Para Celulares Vivo":{   
                     indiceRelatorio = 4;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes Locais Para Celulares de Outras Operadoras":{ 
                     indiceRelatorio = 5;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes Locais Para Fixo Vivo":{       
                     indiceRelatorio = 6;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes Locais Para Fixo de Outras Operadoras":{  
                     indiceRelatorio = 7;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                                 
                 // ****************************** Cobrança tipo VC2 ******************************
                 case "Para Dentro do Estado Para Celulares Vivo":{ 
                     indiceRelatorio = 8;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Dentro do Estado Para Celulares de Outras Operadoras":{
                     indiceRelatorio = 9; 
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Dentro do Estado Para Fixo Vivo":{     
                     indiceRelatorio = 10;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Dentro do Estado Para Fixo de Outras Operadoras":{  
                     indiceRelatorio = 11;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                                 
                 // ****************************** Cobrança tipo VC3 ******************************
                 case "Para Outros Estados Para Celulares Vivo":{         
                     indiceRelatorio = 12;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Outros Estados Para Celulares de Outras Operadoras":{  
                     indiceRelatorio = 13;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Outros Estados Para Fixo Vivo":{            
                     indiceRelatorio = 14;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Outros Estados Para Fixo de Outras Operadoras":{     
                     indiceRelatorio = 15; 
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 // ****************************** Cobrança tipo SMS ******************************
                 case "Torpedo SMS":{              
                     indiceRelatorio = 16;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Torpedo SMS para Outros Servicos":{             
                     indiceRelatorio = 17;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
@@ -218,7 +231,7 @@ public class Banco {
                               
                 case "Internet Movel - Vivo Wap":{      
                     indiceRelatorio = 18;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                                      
@@ -226,13 +239,13 @@ public class Banco {
                   
                 case "Ligacoes Locais Para Grupo":{      
                     indiceRelatorio = 19;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Internet Movel":{              
                     indiceRelatorio = 20; 
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                                       
@@ -240,25 +253,25 @@ public class Banco {
                
                 case "Acesso Caixa Postal":{         
                     indiceRelatorio = 21;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                                 
                 case "Adicional por Ligacoes Realizadas":{          
                     indiceRelatorio = 22;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Adicional por Ligacoes Recebidas":{      
                     indiceRelatorio = 23;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                                                        
                 case "Ligacoes Recebidas em Roaming":{            
                     indiceRelatorio = 24;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }
                 
@@ -266,13 +279,13 @@ public class Banco {
                 
                 case "Ligacoes Recebidas a Cobrar De Celulares Vivo":{   
                     indiceRelatorio = 25;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }  
                 
                 case "Recebidas a Cobrar de Outro DDD De Celulares Vivo":{   
                     indiceRelatorio = 26;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }  
                 
@@ -280,14 +293,15 @@ public class Banco {
               
                 case "": case " ":{      
                     indiceRelatorio = 27;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
                     break;
                 }  
                                 
                 default:{                 
                     indiceRelatorio = 28;
-                    listaFatura = organizaFatura(indiceConta, descricao ,item.retornaTipo(indiceRelatorio),listaFatura);}
+                    listaFatura = organizaFatura(indiceConta, descricao ,item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);}
             }// switch        
+        
         }// for
         this.setRelatorioServicos(listaFatura);
     }
@@ -297,33 +311,6 @@ public class Banco {
         valor = this.conta.get(indexConta).getValor() + this.relatorioServicos.get(indexFatura).getValor();
         return valor;
     }
-/*
-    public String somaTempo(String v, String v2){
-        Date soma = new Date();
-        GregorianCalendar gc = new GregorianCalendar();   
-  
-        int hora = Integer.parseInt(v.substring(0,2));
-        int min = Integer.parseInt(v.substring(3,5));
-        int seg = Integer.parseInt(v.substring(6,8));
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");   
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");   
-        Time time = new Time(hora, min, seg);           
-        gc.setTimeInMillis(time.getTime());   
-        
-        hora = Integer.parseInt(v2.substring(0,2));
-        min = Integer.parseInt(v2.substring(3,5));
-        seg = Integer.parseInt(v2.substring(6,8));
-        
-        gc.add(Calendar.HOUR,hora);
-        gc.add(Calendar.MINUTE,min);
-        gc.add(Calendar.SECOND,seg);  
-        
-        return sdf2.format(gc.getTime());
-    }
-    
-    */
-    
         
     public ArrayList<Conta> getConta() {
         return this.conta;
@@ -340,5 +327,15 @@ public class Banco {
     public void setRelatorioServicos(ArrayList<Conta> relatorioServicos) {
         this.relatorioServicos = relatorioServicos;
     }
+
+    public ArrayList<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(ArrayList<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+    
+    
     
 }
