@@ -6,6 +6,7 @@
 package View;
 
 import Banco.Banco;
+import Banco.Usuario;
 import Control.Conta;
 import Control.ProcessaArq;
 import Control.Tratamento;
@@ -41,16 +42,21 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu2 = new javax.swing.JMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuAbreConta = new javax.swing.JMenu();
         menuFatura = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         menuRelatorioServicos = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
-        menuPDF = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        consumoLinhaPDF = new javax.swing.JMenuItem();
+        servicoUtilizadoPDF = new javax.swing.JMenu();
         menuSair = new javax.swing.JMenu();
+
+        jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(200, 200));
@@ -128,7 +134,17 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuFatura);
 
-        menuRelatorioServicos.setText("Relatório de Serviços    *");
+        jMenu3.setText("Relatório    *");
+
+        jMenuItem2.setText("Consumo por linha");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
+
+        menuRelatorioServicos.setText("Serviços utilizados    ");
         menuRelatorioServicos.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
             public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
                 menuRelatorioServicosMenuKeyPressed(evt);
@@ -143,25 +159,27 @@ public class Principal extends javax.swing.JFrame {
                 menuRelatorioServicosMouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuRelatorioServicos);
+        jMenu3.add(menuRelatorioServicos);
 
-        jMenu1.setText("Relatório    *");
+        jMenuBar1.add(jMenu3);
 
-        menuPDF.setText("Serviços");
-        menuPDF.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuPDFMouseClicked(evt);
-            }
-        });
-        jMenu1.add(menuPDF);
+        jMenu1.setText("Salvar em PDF    *");
 
-        jMenuItem1.setText("Consumo por linhas");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        consumoLinhaPDF.setText("Consumo por linhas");
+        consumoLinhaPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                consumoLinhaPDFActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(consumoLinhaPDF);
+
+        servicoUtilizadoPDF.setText("Consumo por serviços utilizados");
+        servicoUtilizadoPDF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                servicoUtilizadoPDFMouseClicked(evt);
+            }
+        });
+        jMenu1.add(servicoUtilizadoPDF);
 
         jMenuBar1.add(jMenu1);
 
@@ -222,13 +240,13 @@ public class Principal extends javax.swing.JFrame {
         else{ JOptionPane.showMessageDialog(null,"Nenhuma conta selecionada"); }
     }//GEN-LAST:event_menuRelatorioServicosMouseClicked
 
-    private void menuPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPDFMouseClicked
+    private void servicoUtilizadoPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_servicoUtilizadoPDFMouseClicked
         // TODO add your handling code here:
         ProcessaArq arq = new ProcessaArq();
         
         if(arq.verificaConta() || arq.verificaRelatorioServicos()){
             try {     
-                arq.gravaArquivo(arq.buscaRelatorioServicos(), this.caminho);
+                arq.gravaArquivoServicos(arq.buscaRelatorioServicos(), this.caminho);
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             } catch (DocumentException ex) {
@@ -236,7 +254,7 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         else{ JOptionPane.showMessageDialog(null,"Nenhuma conta selecionada"); }
-    }//GEN-LAST:event_menuPDFMouseClicked
+    }//GEN-LAST:event_servicoUtilizadoPDFMouseClicked
 
     private void menuSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSairMouseClicked
         // TODO add your handling code here:
@@ -253,7 +271,8 @@ public class Principal extends javax.swing.JFrame {
         else{
             try {
                 arq.importaDadosFatura(caminho);
-
+                arq.importaDadosUsuarios();
+                
                 lista = arq.buscaBanco();
                 preencheTabelaOriginal(lista);
 
@@ -265,15 +284,30 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_menuAbreContaMouseClicked
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void consumoLinhaPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consumoLinhaPDFActionPerformed
+        // TODO add your handling code here: 
+        ProcessaArq arq = new ProcessaArq();
+        
+        if(arq.verificaConta() || arq.verificaRelatorioConsumoUsuarios()){
+            try {     
+                arq.gravaArquivoConsumoUsuarios(arq.buscaRelatorioUsuarios(), this.caminho);
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{ JOptionPane.showMessageDialog(null,"Nenhuma conta selecionada"); }
+        
+    }//GEN-LAST:event_consumoLinhaPDFActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
+        ProcessaArq arq = new ProcessaArq();
+        if(arq.verificaRelatorioServicos()){ preencheTabelaRelatorioUsuarios(arq.buscaRelatorioUsuarios()); }       
+        else{ JOptionPane.showMessageDialog(null,"Nenhuma conta selecionada"); }      
         
-        
-        
-        
-        
-        
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
     private void preencheTabelaOriginal(ArrayList<Conta> conta){
@@ -389,6 +423,48 @@ public class Principal extends javax.swing.JFrame {
         tabela.revalidate();  
     } 
     
+    private void preencheTabelaRelatorioUsuarios(ArrayList<Usuario> usuario){
+        DecimalFormat df = new DecimalFormat("#,####.##"); 
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");               
+        tabela.getTableHeader().setReorderingAllowed(false);          
+        final DefaultTableModel dm = new DefaultTableModel(); 
+        Tratamento tempo = new Tratamento();
+        tabela.setModel(dm);
+        
+        dm.addColumn("Item");
+        dm.addColumn("Lotação");
+        dm.addColumn("SIAPE/CPF");
+        dm.addColumn("Usuário");
+        dm.addColumn("Número");
+        dm.addColumn("Tipo");
+        dm.addColumn("Valor");
+        
+        tabela.getColumnModel().getColumn(0).setPreferredWidth(45);
+        tabela.getColumnModel().getColumn(1).setPreferredWidth(110); 
+        tabela.getColumnModel().getColumn(2).setPreferredWidth(80); 
+        tabela.getColumnModel().getColumn(3).setPreferredWidth(290); 
+        tabela.getColumnModel().getColumn(4).setPreferredWidth(115); 
+        tabela.getColumnModel().getColumn(5).setPreferredWidth(45); 
+        tabela.getColumnModel().getColumn(5).setPreferredWidth(90); 
+        
+        for(int a=0;a < usuario.size();a++){   
+            dm.addRow(new Object[]{null, null, null});
+            tabela.setValueAt(a+1, a, 0);                                       
+            tabela.setValueAt(usuario.get(a).getCidade(), a, 1);                   
+            tabela.setValueAt(usuario.get(a).getSiape(), a, 2);        
+            tabela.setValueAt(usuario.get(a).getNome(), a, 3);         
+            tabela.setValueAt(usuario.get(a).getLinha(), a, 4);    
+            tabela.setValueAt(usuario.get(a).getTipo(), a, 5);       
+            tabela.setValueAt("R$"+df.format(usuario.get(a).getValor()), a, 6);  
+        }           
+        
+        tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tabela.revalidate();  
+    } 
+      
+        
+        
+        
     
     public static void main(String args[]) {
         try {
@@ -420,15 +496,18 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem consumoLinhaPDF;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuAbreConta;
     private javax.swing.JMenu menuFatura;
-    private javax.swing.JMenu menuPDF;
     private javax.swing.JMenu menuRelatorioServicos;
     private javax.swing.JMenu menuSair;
+    private javax.swing.JMenu servicoUtilizadoPDF;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

@@ -124,7 +124,6 @@ public class Tratamento {
             case 25: case 26: { tipo = "Ligações Recebidas à Cobrar"; break; }
             case 27: case 28: { tipo = "Indeterminado na fatura"; break; }
         }
-        System.out.println(tipo);
         return tipo;
     }
 

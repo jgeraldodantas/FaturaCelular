@@ -12,25 +12,28 @@ package Banco;
 public class Usuario {
     
     private String cidade;
-    private long numero;
     private String siape;
+    private String nome;
+    private long linha;
     private String tipo;
-    private String usuario;
+    private Double valor;
 
-    public Usuario(String cidade, long numero, String siape, String tipo, String usuario) {
+    public Usuario(String cidade, String siape, String nome, long linha, String tipo, Double valor) {
         this.cidade = cidade;
-        this.numero = numero;
         this.siape = siape;
+        this.nome = nome;
+        this.linha = linha;
         this.tipo = tipo;
-        this.usuario = usuario;
+        this.valor = valor;
     }
-    
+
     public Usuario() {
         this.cidade = "";
-        this.numero = 0;
         this.siape = "";
+        this.nome = "";
+        this.linha = 0;
         this.tipo = "";
-        this.usuario = "";
+        this.valor = 0.0;
     }
 
     public String getCidade() {
@@ -41,20 +44,28 @@ public class Usuario {
         this.cidade = cidade;
     }
 
-    public long getNumero() {
-        return numero;
-    }
-
-    public void setNumero(long numero) {
-        this.numero = numero;
-    }
-
     public String getSiape() {
         return siape;
     }
 
     public void setSiape(String siape) {
         this.siape = siape;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public long getLinha() {
+        return linha;
+    }
+
+    public void setLinha(long linha) {
+        this.linha = linha;
     }
 
     public String getTipo() {
@@ -65,12 +76,13 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
-     
+    
+    
 }

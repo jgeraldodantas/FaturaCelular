@@ -51,14 +51,168 @@ public class ProcessaArq {
       
     public ArrayList<Conta> buscaBanco(){
         banco.relatorioServicos();
+        banco.organizaConsumoUsuarios();
         return banco.recuperaDados();
     }
     
     public ArrayList<Conta> buscaRelatorioServicos(){         
         return banco.getRelatorioServicos();
     }
+    
+    public ArrayList<Usuario> buscaRelatorioUsuarios(){         
+        return banco.getRelatorioConsumoUsuario();
+    }
 
-    public void gravaArquivo(ArrayList<Conta> lista, String caminho) throws IOException, DocumentException{
+    
+    
+        public void gravaArquivoConsumoUsuarios(ArrayList<Usuario> lista, String caminho) throws IOException, DocumentException{
+       
+        String local[];        
+        Document doc = null;
+        OutputStream os = null;
+        Paragraph p = new Paragraph();  
+        Tratamento tempo = new Tratamento();
+        DecimalFormat df = new DecimalFormat("#,####.##");
+        String informacao, tipo = new String();
+        Double soma, valorTotal = 0.0;      
+        
+        PdfPTable table = new PdfPTable(5); //tabela com 3 colunas
+        float[] headerwidths = { 30, 80, 40, 20, 20 }; // define a largura de cada coluna
+        table.setWidths(headerwidths);
+        
+        
+        caminho = localizaArquivo(false)+".pdf";        
+        try {//configurações da página          
+            float fntSize, lineSpacing;
+            fntSize = 8f;
+            lineSpacing = 8f;
+            doc = new Document(PageSize.A4.rotate(), 10, 10, 30, 40);
+            
+            os = new FileOutputStream(caminho);            
+            PdfWriter.getInstance(doc, os);            
+            doc.open();
+                                                
+            //cabecalho da tabela
+            table.getDefaultCell().setBorder(0);
+            table.getWidthPercentage();
+                      
+            table.getDefaultCell().setBorder(0);
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            table.getDefaultCell().setColspan(5);
+
+            table.addCell(new Paragraph("Consumo por usuário"));
+
+            table.getDefaultCell().setBorder(1);
+            table.getDefaultCell().setColspan(0);
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+            
+            table.addCell(new Paragraph(""));
+            table.addCell(new Paragraph(""));
+            table.addCell(new Paragraph(""));
+            table.addCell(new Paragraph(""));
+            table.addCell(new Paragraph(""));
+            table.getDefaultCell().setBorder(1);
+            
+            
+            table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY); 
+            table.addCell(new Paragraph("Cidade"));
+            table.addCell(new Paragraph("Usuário"));
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            table.addCell(new Paragraph("Número"));
+            table.addCell(new Paragraph("Tipo"));
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+            table.addCell(new Paragraph("Valor"));
+            table.getDefaultCell().setBackgroundColor(BaseColor.WHITE); 
+            
+            soma = 0.0; 
+            for(int a=0;a<=lista.size()-1;a++){
+
+                //cidade
+                informacao = new String();
+                informacao = lista.get(a).getCidade();
+            //    table.setTotalWidth(80);
+                table.addCell(new Paragraph(informacao));        
+                
+                //Usuário
+                informacao = new String();
+                informacao = lista.get(a).getNome();
+            //    table.setTotalWidth(200);
+                table.addCell(new Paragraph(informacao));                    
+
+                //Número
+                informacao = new String();                                 
+                informacao = String.valueOf(lista.get(a).getLinha());
+            //    table.setTotalWidth(10);
+                table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+                table.addCell(new Paragraph(informacao)); 
+
+                //Tipo
+                informacao = new String();                                 
+                informacao = lista.get(a).getTipo();
+            //    table.setTotalWidth(10);
+                table.addCell(new Paragraph(informacao)); 
+                
+                //Valor
+                informacao = new String();  
+                soma += lista.get(a).getValor();
+                informacao = "R$"+ df.format(lista.get(a).getValor());
+            //    table.setTotalWidth(10);
+                table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+                table.addCell(new Paragraph(informacao)); 
+            }                     
+            
+            // Total
+            table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
+            informacao = new String();
+            informacao = "Total";                    
+            table.addCell(informacao);
+
+            // tempo                               
+            table.addCell("");            
+            table.addCell("");            
+            table.addCell("");    
+
+            // valor
+            informacao = new String();
+            informacao = "R$"+ df.format(soma);
+            table.addCell(informacao);                                   
+            table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);  
+            
+            table.addCell("");            
+            table.addCell("");            
+            table.addCell("");               
+            table.addCell("");            
+            table.addCell("");      
+            
+            //Legenda                   
+            table.getDefaultCell().setBorder(0);      
+            table.addCell("M = Modem");   
+            table.addCell("V = Voz          VD = Voz + Dados");            
+            table.addCell("");          
+            table.addCell("");          
+            table.addCell("");  
+                             
+            doc.add(table);
+            // fim da página
+        } finally {
+            if (doc != null) {
+                //fechamento do documento
+                doc.close();
+            }
+            if (os != null) {
+               //fechamento da stream de saída
+               os.close();
+            }
+        }     
+    }
+
+    
+    
+    
+    
+    
+    
+    public void gravaArquivoServicos(ArrayList<Conta> lista, String caminho) throws IOException, DocumentException{
         ArrayList<String> listaTipos;
         String local[];        
         Document doc = null;
@@ -90,10 +244,23 @@ public class ProcessaArq {
             tempoSubTotal = "00:00:00";  
             listaTipos = new ArrayList<String>();
             
+            //cabecalho da tabela
+            table.getDefaultCell().setBorder(0);
+            table.getWidthPercentage();
+                      
+            table.getDefaultCell().setBorder(0);
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            table.getDefaultCell().setColspan(3);
+
+            table.addCell(new Paragraph(lista.get(10).getDetalheServico()));
+
+            table.getDefaultCell().setBorder(1);
+            table.getDefaultCell().setColspan(0);
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+            
             for(int a=0;a<lista.size()-1;a++){
                 System.out.println(a+" - "+lista.get(a).getTipo());
-                
-                
+                                
                 if(!listaTipos.contains(lista.get(a).getTipo())){
                     
                     listaTipos.add(lista.get(a).getTipo());                                            
@@ -101,9 +268,7 @@ public class ProcessaArq {
                     tipo = new String();
                     informacao = new String();  
                     
-                    //cabecalho da tabela
-                    table.getDefaultCell().setBorder(0);
-                    table.getWidthPercentage();
+                    
                     informacao = "* * * * * "+listaTipos.get(listaTipos.size()-1)+" * * * * *";                     
                     table.getDefaultCell().setBorder(1);
                     table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
@@ -228,7 +393,6 @@ public class ProcessaArq {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");  
                 
         try{
-            int cont = 0;
             Double valor = 0.0;
             String[] vetor = new String[20];
             String separador = new String();
@@ -265,8 +429,7 @@ public class ProcessaArq {
                 dados.setValor(item.trataValor(vetor[17]));
                 banco.cadastro(dados);
                  
-                valor += dados.getValor();                
-                cont++;
+                valor += dados.getValor();     
             }
             arq.close();
                         
@@ -278,14 +441,11 @@ public class ProcessaArq {
     };
     
     
-    
-    /*
     public void importaDadosUsuarios(){
         Tratamento item = new Tratamento();
         String caminho = "src\\Banco\\usuarios.csv";
             
         try{
-            int cont = 0;
             Double valor = 0.0;
             String[] vetor = new String[20];
             String separador = new String();
@@ -302,29 +462,13 @@ public class ProcessaArq {
                 linha = linha+separador;           
                 vetor = linha.split(separador,-1);   
                  
+                user.setCidade(vetor[0]);
+                user.setSiape(vetor[1]);
+                user.setNome(vetor[2]);
+                user.setLinha(Long.parseLong(vetor[3]));
+                user.setTipo(vetor[4]);
                
-                dados.setNumConta(Long.parseLong(vetor[0]));
-                dados.setTelefoneOrigem(Long.parseLong(vetor[1]));
-                dados.setDetalheServico(vetor[2]);
-                dados.setDescricaoServico(item.removeEspaco(vetor[3])+" ");
-                dados.setDestinoServico(item.removeEspaco(vetor[4]));     
-                dados.setDataLigacao(vetor[5]);  
-                dados.setHoraInicio(sdf.parse(item.trataTempo(vetor[6])));   
-                dados.setDestino(vetor[7]);
-                dados.setTelefoneChamado(vetor[8]);
-                dados.setTarifa(vetor[9]);
-                dados.setDuracao(item.trataTempo(vetor[10]));
-                dados.setOperadoraDestino(vetor[11]);                    
-                dados.setOrigem(vetor[12]);
-                dados.setTipoChamada(vetor[13]);
-                dados.setServico(vetor[14]);
-                dados.setUnidade(vetor[15]);
-                dados.setReferencia(vetor[16]);                             
-                dados.setValor(item.trataValor(vetor[17]));
-                banco.cadastro(dados);
-                 
-                valor += dados.getValor();                
-                cont++;
+                banco.cadastroUsuario(user);             
             }
             arq.close();
                         
@@ -334,7 +478,7 @@ public class ProcessaArq {
         } 
     }
     
-    */
+    
     
     
     
@@ -364,6 +508,12 @@ public class ProcessaArq {
     public boolean verificaConta(){
         boolean ok = false;
         if(banco.getConta().size() > 1){ ok = true; }
+        return ok;
+    }
+
+    public boolean verificaRelatorioConsumoUsuarios(){
+        boolean ok = false;
+        if(banco.getRelatorioConsumoUsuario().size() > 1){ ok = true; }
         return ok;
     }
     

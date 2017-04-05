@@ -22,37 +22,73 @@ import java.util.Locale;
 public class Banco {
     
     private ArrayList<Conta> conta;
-    private ArrayList<Conta> relatorioServicos;
     private ArrayList<Usuario> usuarios;
+    private ArrayList<Conta> relatorioServicos;
+    private ArrayList<Usuario> relatorioConsumoUsuario;
 
     public Banco() {
         this.conta = new ArrayList<Conta>();
-        this.relatorioServicos = new ArrayList<Conta>();
         this.usuarios = new ArrayList<Usuario>();
+        this.relatorioServicos = new ArrayList<Conta>();
+        this.relatorioConsumoUsuario = new ArrayList<Usuario>();
     }
         
-    public Banco(ArrayList<Conta> conta, ArrayList<Conta> relatorioServicos, ArrayList<Usuario> usuario) {
+    public Banco(ArrayList<Conta> conta, ArrayList<Conta> relatorioServicos, ArrayList<Usuario> usuario, ArrayList<Usuario> relatorioConsumoUsuario) {
         this.conta = conta;
         this.relatorioServicos = relatorioServicos;
         this.usuarios = usuario;
+        this.relatorioConsumoUsuario = relatorioConsumoUsuario;
     }
                     
     public void cadastro(Conta dados){
         this.conta.add(dados);
     }
     
+    public void cadastroUsuario(Usuario usuario){
+        this.usuarios.add(usuario);
+    }
+    
+    public void organizaConsumoUsuarios(){
+        ArrayList listaUsuario = new ArrayList<Usuario>();
+        Usuario user;
+        Double soma;
+        
+        // numero(linha) - plano(V/VD/M) - valor
+        for(int a=0;a<this.usuarios.size();a++){
+            soma = 0.0;
+            user = new Usuario();
+            
+            for(int b=0;b<this.conta.size();b++){                
+                if(String.valueOf(this.conta.get(b).getTelefoneOrigem()).equals(String.valueOf(this.usuarios.get(a).getLinha()))){                    
+                    soma += this.conta.get(b).getValor();                    
+                }                
+            }
+            user.setCidade(usuarios.get(a).getCidade());
+            user.setSiape(usuarios.get(a).getSiape());
+            user.setNome(usuarios.get(a).getNome());
+            user.setLinha(usuarios.get(a).getLinha());
+            user.setTipo(usuarios.get(a).getTipo());
+            user.setValor(soma);
+            listaUsuario.add(user);
+        }
+        this.setRelatorioConsumoUsuario(listaUsuario);
+    }
+    
+    
+    
+    
     public ArrayList<Conta> organizaFatura(int indexConta, String descricao, String tipo, ArrayList<Conta> lista){ 
         Conta resumo;
         boolean ok = false;
         Tratamento tempo = new Tratamento();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        
-        
+                
         for(int a=0; a < lista.size();a++){
             if(lista.get(a).getDescricaoServico().equals(descricao) && lista.get(a).getTipo().equals(tipo)){   
                resumo = new Conta();
                resumo.setDuracao(tempo.somaTempo(this.conta.get(indexConta).getDuracao(), lista.get(a).getDuracao()));
                resumo.setValor(this.conta.get(indexConta).getValor() + lista.get(a).getValor());
+               resumo.setDetalheServico(this.conta.get(indexConta).getDetalheServico());
                resumo.setDescricaoServico(descricao);
                
                resumo.setTipo(tipo);
@@ -65,6 +101,7 @@ public class Banco {
         if(!ok){
             resumo = new Conta();
             resumo.setDuracao(tempo.somaTempo(this.conta.get(indexConta).getDuracao(), lista.get(0).getDuracao()));
+            resumo.setDetalheServico(this.conta.get(indexConta).getDetalheServico());
             resumo.setValor(this.conta.get(indexConta).getValor());          
             resumo.setDescricaoServico(descricao);   
                
@@ -113,29 +150,25 @@ public class Banco {
                 // ****************************** Cobrança tipo Roaming ******************************
                 case "Ligacoes de Longa Distancia Para Celulares Vivo":{  
                     indiceRelatorio = 0;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
-                    System.out.println(listaFatura.get(0).getTipo());
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);                    
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Celulares de Outras Operadoras":{   
                     indiceRelatorio = 1;
                     listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
-                    System.out.println(listaFatura.get(0).getTipo());
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Fixo Vivo":{     
                     indiceRelatorio = 2;
                     listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
-                    System.out.println(listaFatura.get(0).getTipo());
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Fixo de Outras Operadoras":{ 
                     indiceRelatorio = 3;
                     listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
-                    System.out.println(listaFatura.get(0).getTipo());
                     break;
                 }
                                                 
@@ -334,6 +367,14 @@ public class Banco {
 
     public void setUsuarios(ArrayList<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public ArrayList<Usuario> getRelatorioConsumoUsuario() {
+        return this.relatorioConsumoUsuario;
+    }
+
+    public void setRelatorioConsumoUsuario(ArrayList<Usuario> relatorioConsumoUsuario) {
+        this.relatorioConsumoUsuario = relatorioConsumoUsuario;
     }
     
     
