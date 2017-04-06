@@ -132,7 +132,7 @@ public class Principal extends javax.swing.JFrame {
 
         detalhes.setText("Detalhes    *");
 
-        detalheFatura.setText("Fatura    *");
+        detalheFatura.setText("Fatura completa");
         detalheFatura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 detalheFaturaMouseClicked(evt);
@@ -140,7 +140,7 @@ public class Principal extends javax.swing.JFrame {
         });
         detalhes.add(detalheFatura);
 
-        detPeriodoAnterior.setText("Período Anterior");
+        detPeriodoAnterior.setText("Período anterior");
         detPeriodoAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 detPeriodoAnteriorActionPerformed(evt);
@@ -160,7 +160,7 @@ public class Principal extends javax.swing.JFrame {
         });
         relatorios.add(relConsumoLinha);
 
-        relPeriodoAnterior.setText("Período Anterior");
+        relPeriodoAnterior.setText("Período anterior");
         relPeriodoAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 relPeriodoAnteriorActionPerformed(evt);
@@ -378,6 +378,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void preencheTabelaOriginal(ArrayList<Conta> conta){
         double soma = 0.0;
+        String tempo = "00:00:00";
+        Tratamento t = new Tratamento();
         DecimalFormat df = new DecimalFormat("#,####.##"); 
         SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
                 
@@ -447,20 +449,25 @@ public class Principal extends javax.swing.JFrame {
             tabela.setValueAt(conta.get(a).getUnidade(), a, 16);    
             tabela.setValueAt(conta.get(a).getReferencia(), a, 17);    
             tabela.setValueAt("R$"+conta.get(a).getValor(), a, 18);  
+            tempo = t.somaTempo(tempo,conta.get(a).getDuracao());
         }           
         dm.addRow(new Object[]{null, null, null, null, null, null});
-        tabela.setValueAt("Total: ", conta.size(), 0);
-        tabela.setValueAt("R$"+df.format(soma), conta.size(), 1);
+        dm.addRow(new Object[]{null, null, null, null, null, null});
+        tabela.setValueAt("Total", conta.size()+1, 0);
+        tabela.setValueAt(tempo, conta.size()+1, 11);
+        tabela.setValueAt(t.conversaoHoraMinuto(tempo), conta.size()+1, 12);
+        tabela.setValueAt("R$"+df.format(soma), conta.size()+1, 18);
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabela.revalidate();  
     } 
     
-        private void preencheTabelaRelatorioServicos(ArrayList<Conta> conta){
+    private void preencheTabelaRelatorioServicos(ArrayList<Conta> conta){
+        String tempo = "00:00:00";
+        Tratamento t = new Tratamento();
         DecimalFormat df = new DecimalFormat("#,####.##"); 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");               
         tabela.getTableHeader().setReorderingAllowed(false);          
         final DefaultTableModel dm = new DefaultTableModel(); 
-        Tratamento tempo = new Tratamento();
         tabela.setModel(dm);
         double soma = 0.0;
         
@@ -487,25 +494,30 @@ public class Principal extends javax.swing.JFrame {
             tabela.setValueAt(conta.get(a).getTipo(), a, 1);                   
             tabela.setValueAt(conta.get(a).getDescricaoServico(), a, 2);        
             tabela.setValueAt(conta.get(a).getDuracao(), a, 3);       
-            tabela.setValueAt(tempo.conversaoHoraMinuto(conta.get(a).getDuracao()), a, 4);       
+            tabela.setValueAt(t.conversaoHoraMinuto(conta.get(a).getDuracao()), a, 4);       
             tabela.setValueAt("R$"+df.format(conta.get(a).getValor()), a, 5);  
             tabela.setValueAt("", a, 6);  
+            tempo = t.somaTempo(tempo,conta.get(a).getDuracao());
         }           
         
         dm.addRow(new Object[]{null, null, null, null, null, null});
-        tabela.setValueAt("Total: ", conta.size(), 0);
-        tabela.setValueAt("R$"+df.format(soma), conta.size(), 1);
+        dm.addRow(new Object[]{null, null, null, null, null, null});
+        tabela.setValueAt("Total", conta.size()+1, 0);
+        tabela.setValueAt(tempo, conta.size()+1, 3);
+        tabela.setValueAt(t.conversaoHoraMinuto(tempo), conta.size()+1, 4);
+        tabela.setValueAt("R$"+df.format(soma), conta.size()+1, 5);
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabela.revalidate();  
     } 
     
     
     private void preencheTabelaPeriodoAnterior(ArrayList<Conta> periodo){
+        String tempo = "00:00:00";
+        Tratamento t = new Tratamento();
         DecimalFormat df = new DecimalFormat("#,####.##"); 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");               
         tabela.getTableHeader().setReorderingAllowed(false);          
         final DefaultTableModel dm = new DefaultTableModel(); 
-        Tratamento tempo = new Tratamento();
         tabela.setModel(dm);
         double soma = 0.0;
         
@@ -533,13 +545,17 @@ public class Principal extends javax.swing.JFrame {
             tabela.setValueAt(periodo.get(a).getDescricaoServico(), a, 2);        
             tabela.setValueAt(periodo.get(a).getDataLigacao(), a, 3);        
             tabela.setValueAt(periodo.get(a).getDuracao(), a, 4);       
-            tabela.setValueAt(tempo.conversaoHoraMinuto(periodo.get(a).getDuracao()), a, 5);       
-            tabela.setValueAt("R$"+df.format(periodo.get(a).getValor()), a, 6);   
+            tabela.setValueAt(t.conversaoHoraMinuto(periodo.get(a).getDuracao()), a, 5);       
+            tabela.setValueAt("R$"+df.format(periodo.get(a).getValor()), a, 6);  
+            tempo = t.somaTempo(tempo,periodo.get(a).getDuracao()); 
         }           
         
         dm.addRow(new Object[]{null, null, null, null, null, null});
-        tabela.setValueAt("Total: ", periodo.size(), 0);
-        tabela.setValueAt("R$"+df.format(soma), periodo.size(), 1);
+        dm.addRow(new Object[]{null, null, null, null, null, null});
+        tabela.setValueAt("Total", periodo.size()+1, 0);
+        tabela.setValueAt(tempo, periodo.size()+1, 4);
+        tabela.setValueAt(t.conversaoHoraMinuto(tempo), periodo.size()+1, 5);
+        tabela.setValueAt("R$"+df.format(soma), periodo.size()+1, 6);
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabela.revalidate();  
     } 
@@ -549,7 +565,6 @@ public class Principal extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");               
         tabela.getTableHeader().setReorderingAllowed(false);          
         final DefaultTableModel dm = new DefaultTableModel(); 
-        Tratamento tempo = new Tratamento();
         tabela.setModel(dm);
         double soma = 0.0;
         
@@ -582,8 +597,9 @@ public class Principal extends javax.swing.JFrame {
         }           
         
         dm.addRow(new Object[]{null, null, null, null, null, null});
-        tabela.setValueAt("Total: ", usuario.size(), 0);
-        tabela.setValueAt("R$"+df.format(soma), usuario.size(), 1);
+        dm.addRow(new Object[]{null, null, null, null, null, null});
+        tabela.setValueAt("Total", usuario.size(), 0);
+        tabela.setValueAt("R$"+df.format(soma), usuario.size(), 6);
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabela.revalidate();  
     } 

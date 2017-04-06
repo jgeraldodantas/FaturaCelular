@@ -31,7 +31,7 @@
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="detalheFatura">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Fatura    *"/>
+                <Property name="text" type="java.lang.String" value="Fatura completa"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="detalheFaturaMouseClicked"/>
@@ -39,7 +39,7 @@
             </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="detPeriodoAnterior">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Per&#xed;odo Anterior"/>
+                <Property name="text" type="java.lang.String" value="Per&#xed;odo anterior"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="detPeriodoAnteriorActionPerformed"/>
@@ -62,7 +62,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="relPeriodoAnterior">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Per&#xed;odo Anterior"/>
+                <Property name="text" type="java.lang.String" value="Per&#xed;odo anterior"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="relPeriodoAnteriorActionPerformed"/>
