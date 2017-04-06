@@ -18,6 +18,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -185,6 +186,19 @@ public class Tratamento {
         valor = Double.parseDouble(v17.replace(",","."));        
         return valor;
     }
+    
+    public String verificaNomeServico(ArrayList<Conta> lista){
+        String servico = new String();
+        
+        for(int a=0; a<lista.size(); a++){
+            if(!(lista.get(a).getDetalheServico().equals(""))){
+                servico = lista.get(a).getDetalheServico();
+                break;
+            }
+        }
+        return servico;
+    }
+    
     
     public String verificaRoaming(){
         String tipo = new String();

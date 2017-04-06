@@ -49,9 +49,10 @@ public class ProcessaArq {
     
     static Banco banco = new Banco();    
       
-    public ArrayList<Conta> buscaBanco(){
+    public ArrayList<Conta> buscaBanco() throws ParseException{
         banco.relatorioServicos();
         banco.organizaConsumoUsuarios();
+        banco.criaPeriodoAnterior();
         return banco.recuperaDados();
     }
     
@@ -62,25 +63,29 @@ public class ProcessaArq {
     public ArrayList<Usuario> buscaRelatorioUsuarios(){         
         return banco.getRelatorioConsumoUsuario();
     }
-
     
+    public ArrayList<Conta> buscaRelatorioPeriodoAnterior(){         
+        return banco.getRelatorioPeriodoAnterior();
+    }
     
-        public void gravaArquivoConsumoUsuarios(ArrayList<Usuario> lista, String caminho) throws IOException, DocumentException{
-       
-        String local[];        
+    public ArrayList<Conta> buscaPeriodosAnteriores(){         
+        return banco.getPeriodoAnterior();
+    }   
+    
+    public void gravaArquivoConsumoUsuarios(ArrayList<Usuario> lista, String caminho) throws IOException, DocumentException{
+             
         Document doc = null;
         OutputStream os = null;
         Paragraph p = new Paragraph();  
         Tratamento tempo = new Tratamento();
-        DecimalFormat df = new DecimalFormat("#,####.##");
+        DecimalFormat df = new DecimalFormat("#####.##");
         String informacao, tipo = new String();
         Double soma, valorTotal = 0.0;      
         
         PdfPTable table = new PdfPTable(5); //tabela com 3 colunas
         float[] headerwidths = { 30, 80, 40, 20, 20 }; // define a largura de cada coluna
         table.setWidths(headerwidths);
-        
-        
+                
         caminho = localizaArquivo(false)+".pdf";        
         try {//configurações da página          
             float fntSize, lineSpacing;
@@ -219,15 +224,14 @@ public class ProcessaArq {
         OutputStream os = null;
         Paragraph p = new Paragraph();  
         Tratamento tempo = new Tratamento();
-        DecimalFormat df = new DecimalFormat("#,####.##");
+        DecimalFormat df = new DecimalFormat("#####.##");
         String informacao, tempoServico, tempoSubTotal, tempoTotal, tipo = new String();
         Double soma, valorTotal = 0.0;      
         
         PdfPTable table = new PdfPTable(3); //tabela com 3 colunas
         float[] headerwidths = { 85, 35, 25 }; // define a largura de cada coluna
         table.setWidths(headerwidths);
-        
-        
+               
         caminho = localizaArquivo(false)+".pdf";        
         try {//configurações da página          
             float fntSize, lineSpacing;
@@ -252,7 +256,7 @@ public class ProcessaArq {
             table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.getDefaultCell().setColspan(3);
 
-            table.addCell(new Paragraph(lista.get(10).getDetalheServico()));
+            table.addCell(new Paragraph(tempo.verificaNomeServico(lista)));
 
             table.getDefaultCell().setBorder(1);
             table.getDefaultCell().setColspan(0);
@@ -267,8 +271,7 @@ public class ProcessaArq {
                     soma = 0.0;          
                     tipo = new String();
                     informacao = new String();  
-                    
-                    
+                                        
                     informacao = "* * * * * "+listaTipos.get(listaTipos.size()-1)+" * * * * *";                     
                     table.getDefaultCell().setBorder(1);
                     table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
@@ -281,9 +284,7 @@ public class ProcessaArq {
                     table.getDefaultCell().setColspan(0);
                     table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);
                     table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-                                     
-                    
-                    
+                                                         
                     // conteúdo da tabela
                     for(int b=0;b<=lista.size()-1;b++){
                         if( lista.get(b).getTipo().equals(listaTipos.get(listaTipos.size()-1)) ){
@@ -371,7 +372,7 @@ public class ProcessaArq {
             table.addCell(informacao);
             
             doc.add(table);
-            System.out.println(informacao);
+        //    System.out.println(informacao);
          
         } finally {
             if (doc != null) {
@@ -453,7 +454,7 @@ public class ProcessaArq {
             Usuario user = new Usuario();  
             BufferedReader arq = new BufferedReader(new InputStreamReader(new FileInputStream(caminho),"ISO-8859-1")); 
                                                    
-            separador = item.verificaSeparador(arq.readLine());
+            separador = ",";
             while(arq.ready()){         
                 user = new Usuario(); 
                 vetor = new String[20];
@@ -511,6 +512,12 @@ public class ProcessaArq {
         return ok;
     }
 
+    public boolean verificaRelatorioPeriodoAnterior(){
+        boolean ok = false;
+        if(banco.getRelatorioPeriodoAnterior().size() > 1){ ok = true; }
+        return ok;
+    }
+    
     public boolean verificaRelatorioConsumoUsuarios(){
         boolean ok = false;
         if(banco.getRelatorioConsumoUsuario().size() > 1){ ok = true; }

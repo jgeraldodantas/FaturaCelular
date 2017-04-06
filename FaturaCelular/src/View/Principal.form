@@ -24,34 +24,57 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuAbreContaMouseClicked"/>
           </Events>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="menuFatura">
+        <Menu class="javax.swing.JMenu" name="detalhes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Detalhes    *"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuFaturaMouseClicked"/>
-          </Events>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="detalheFatura">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fatura    *"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="detalheFaturaMouseClicked"/>
+              </Events>
+            </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="detPeriodoAnterior">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Per&#xed;odo Anterior"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="detPeriodoAnteriorActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="relatorios">
           <Properties>
             <Property name="text" type="java.lang.String" value="Relat&#xf3;rio    *"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="relConsumoLinha">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consumo por linha"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="relConsumoLinhaActionPerformed"/>
               </Events>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="menuRelatorioServicos">
+            <MenuItem class="javax.swing.JMenuItem" name="relPeriodoAnterior">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Per&#xed;odo Anterior"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="relPeriodoAnteriorActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <Menu class="javax.swing.JMenu" name="relRelatorioServicos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Servi&#xe7;os utilizados    "/>
               </Properties>
               <Events>
-                <EventHandler event="menuKeyPressed" listener="javax.swing.event.MenuKeyListener" parameters="javax.swing.event.MenuKeyEvent" handler="menuRelatorioServicosMenuKeyPressed"/>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuRelatorioServicosMouseClicked"/>
+                <EventHandler event="menuKeyPressed" listener="javax.swing.event.MenuKeyListener" parameters="javax.swing.event.MenuKeyEvent" handler="relRelatorioServicosMenuKeyPressed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="relRelatorioServicosMouseClicked"/>
               </Events>
             </Menu>
           </SubComponents>
@@ -77,6 +100,14 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="servicoUtilizadoPDFMouseClicked"/>
               </Events>
             </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="consumoPeriodoAnteriorPDF">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consumo em per&#xed;odo anterior"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="consumoPeriodoAnteriorPDFActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuSair">
