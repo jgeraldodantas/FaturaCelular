@@ -16,12 +16,12 @@
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenuBar1MouseClicked"/>
       </Events>
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="menuAbreConta">
+        <Menu class="javax.swing.JMenu" name="abreFatura">
           <Properties>
             <Property name="text" type="java.lang.String" value="  Abrir Fatura    *"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuAbreContaMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="abreFaturaMouseClicked"/>
           </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="detalhes">

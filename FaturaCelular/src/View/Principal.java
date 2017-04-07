@@ -46,7 +46,7 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        menuAbreConta = new javax.swing.JMenu();
+        abreFatura = new javax.swing.JMenu();
         detalhes = new javax.swing.JMenu();
         detalheFatura = new javax.swing.JMenu();
         detPeriodoAnterior = new javax.swing.JMenuItem();
@@ -122,13 +122,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        menuAbreConta.setText("  Abrir Fatura    *");
-        menuAbreConta.addMouseListener(new java.awt.event.MouseAdapter() {
+        abreFatura.setText("  Abrir Fatura    *");
+        abreFatura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuAbreContaMouseClicked(evt);
+                abreFaturaMouseClicked(evt);
             }
         });
-        jMenuBar1.add(menuAbreConta);
+        jMenuBar1.add(abreFatura);
 
         detalhes.setText("Detalhes    *");
 
@@ -297,7 +297,7 @@ public class Principal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_menuSairMouseClicked
 
-    private void menuAbreContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAbreContaMouseClicked
+    private void abreFaturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abreFaturaMouseClicked
         // TODO add your handling code here:
         ProcessaArq arq = new ProcessaArq();
         ArrayList<Conta> lista = new ArrayList<Conta>();
@@ -318,7 +318,7 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         
-    }//GEN-LAST:event_menuAbreContaMouseClicked
+    }//GEN-LAST:event_abreFaturaMouseClicked
 
     private void consumoLinhaPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consumoLinhaPDFActionPerformed
         // TODO add your handling code here: 
@@ -635,6 +635,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu abreFatura;
     private javax.swing.JMenuItem consumoLinhaPDF;
     private javax.swing.JMenuItem consumoPeriodoAnteriorPDF;
     private javax.swing.JMenuItem detPeriodoAnterior;
@@ -644,7 +645,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JMenu menuAbreConta;
     private javax.swing.JMenu menuSair;
     private javax.swing.JMenuItem relConsumoLinha;
     private javax.swing.JMenuItem relPeriodoAnterior;

@@ -436,7 +436,7 @@ public class ProcessaArq {
                         
         }catch(IOException ioe){
                 ioe.printStackTrace();
-                JOptionPane.showMessageDialog(null,"Erro ao abrir o arquivo.\nCertifique-se que o arquivo está no formato correto");
+                JOptionPane.showMessageDialog(null,"Erro ao abrir o arquivo da fatura.\nCertifique-se que o arquivo está no formato correto");
         } 
                
     };
@@ -475,7 +475,7 @@ public class ProcessaArq {
                         
         }catch(IOException ioe){
                 ioe.printStackTrace();
-                JOptionPane.showMessageDialog(null,"Erro ao abrir o arquivo.\nCertifique-se que o arquivo está no formato correto");
+                JOptionPane.showMessageDialog(null,"Erro ao abrir o arquivo de usuarios.\nCertifique-se que o arquivo está no formato correto");
         } 
     }
     
