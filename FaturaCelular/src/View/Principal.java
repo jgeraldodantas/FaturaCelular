@@ -231,7 +231,7 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1029, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -482,8 +482,8 @@ public class Principal extends javax.swing.JFrame {
         tabela.getColumnModel().getColumn(0).setPreferredWidth(45);
         tabela.getColumnModel().getColumn(1).setPreferredWidth(200); 
         tabela.getColumnModel().getColumn(2).setPreferredWidth(400); 
-        tabela.getColumnModel().getColumn(3).setPreferredWidth(80); 
-        tabela.getColumnModel().getColumn(4).setPreferredWidth(115); 
+        tabela.getColumnModel().getColumn(3).setPreferredWidth(65); 
+        tabela.getColumnModel().getColumn(4).setPreferredWidth(100); 
         tabela.getColumnModel().getColumn(5).setPreferredWidth(90); 
         tabela.getColumnModel().getColumn(6).setPreferredWidth(0); 
         
@@ -532,10 +532,10 @@ public class Principal extends javax.swing.JFrame {
         tabela.getColumnModel().getColumn(0).setPreferredWidth(45);
         tabela.getColumnModel().getColumn(1).setPreferredWidth(200); 
         tabela.getColumnModel().getColumn(2).setPreferredWidth(400); 
-        tabela.getColumnModel().getColumn(3).setPreferredWidth(80); 
-        tabela.getColumnModel().getColumn(3).setPreferredWidth(80); 
-        tabela.getColumnModel().getColumn(4).setPreferredWidth(115); 
-        tabela.getColumnModel().getColumn(5).setPreferredWidth(100); 
+        tabela.getColumnModel().getColumn(3).setPreferredWidth(105); 
+        tabela.getColumnModel().getColumn(4).setPreferredWidth(65); 
+        tabela.getColumnModel().getColumn(5).setPreferredWidth(115); 
+        tabela.getColumnModel().getColumn(6).setPreferredWidth(100); 
         
         for(int a=0;a < periodo.size();a++){   
             dm.addRow(new Object[]{null, null, null});
@@ -582,7 +582,7 @@ public class Principal extends javax.swing.JFrame {
         tabela.getColumnModel().getColumn(3).setPreferredWidth(290); 
         tabela.getColumnModel().getColumn(4).setPreferredWidth(115); 
         tabela.getColumnModel().getColumn(5).setPreferredWidth(45); 
-        tabela.getColumnModel().getColumn(5).setPreferredWidth(90); 
+        tabela.getColumnModel().getColumn(6).setPreferredWidth(90); 
         
         for(int a=0;a < usuario.size();a++){   
             dm.addRow(new Object[]{null, null, null});
