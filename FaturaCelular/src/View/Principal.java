@@ -292,6 +292,7 @@ public class Principal extends javax.swing.JFrame {
         if(arq.verificaConta() || arq.verificaRelatorioServicos()){
             try {     
                 arq.gravaArquivoServicos(arq.buscaRelatorioServicos(), this.caminho);
+                JOptionPane.showMessageDialog(null,"Fim do processamento");
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             } catch (DocumentException ex) {
@@ -336,6 +337,7 @@ public class Principal extends javax.swing.JFrame {
         if(arq.verificaConta() || arq.verificaRelatorioConsumoUsuarios()){
             try {     
                 arq.gravaArquivoConsumoUsuarios(arq.buscaRelatorioUsuarios(), this.caminho);
+                JOptionPane.showMessageDialog(null,"Fim do processamento");
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             } catch (DocumentException ex) {
@@ -375,6 +377,7 @@ public class Principal extends javax.swing.JFrame {
         if(arq.verificaConta() || arq.verificaRelatorioPeriodoAnterior()){
             try {     
                 arq.gravaArquivoServicos(arq.buscaRelatorioPeriodoAnterior(), this.caminho);
+                JOptionPane.showMessageDialog(null,"Fim do processamento");
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             } catch (DocumentException ex) {
@@ -390,7 +393,8 @@ public class Principal extends javax.swing.JFrame {
         
         if(arq.verificaConta() || arq.verificaRelatorioConsumoUsuarios()){
             try {     
-                arq.gravaArquivoConsumoUsuarios(arq.buscaRelatorioUsuarios(), this.caminho);
+                arq.gravaArquivoConsumoUnidades(arq.buscaRelatorioUsuarios(), this.caminho);
+                JOptionPane.showMessageDialog(null,"Fim do processamento");
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             } catch (DocumentException ex) {

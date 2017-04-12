@@ -182,7 +182,7 @@ public class Tratamento {
         
         total = tempo1[0]+":"+tempo1[1]+":"+tempo1[2];  
         
-        System.out.println(s+" - "+m+" = "+h);
+    //    System.out.println(s+" - "+m+" = "+h);
         
         return total;   
     }
