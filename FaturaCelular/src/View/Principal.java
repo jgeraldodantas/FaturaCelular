@@ -55,9 +55,10 @@ public class Principal extends javax.swing.JFrame {
         relPeriodoAnterior = new javax.swing.JMenuItem();
         relRelatorioServicos = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
+        consumoPeriodoAnteriorPDF = new javax.swing.JMenuItem();
         consumoLinhaPDF = new javax.swing.JMenuItem();
         servicoUtilizadoPDF = new javax.swing.JMenu();
-        consumoPeriodoAnteriorPDF = new javax.swing.JMenuItem();
+        consumoUnidadePDF = new javax.swing.JMenuItem();
         menuSair = new javax.swing.JMenu();
 
         jMenu2.setText("jMenu2");
@@ -189,6 +190,14 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu1.setText("Salvar em PDF    *");
 
+        consumoPeriodoAnteriorPDF.setText("Consumo em período anterior");
+        consumoPeriodoAnteriorPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consumoPeriodoAnteriorPDFActionPerformed(evt);
+            }
+        });
+        jMenu1.add(consumoPeriodoAnteriorPDF);
+
         consumoLinhaPDF.setText("Consumo por linhas");
         consumoLinhaPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,13 +214,13 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(servicoUtilizadoPDF);
 
-        consumoPeriodoAnteriorPDF.setText("Consumo em período anterior");
-        consumoPeriodoAnteriorPDF.addActionListener(new java.awt.event.ActionListener() {
+        consumoUnidadePDF.setText("Consumo por unidade");
+        consumoUnidadePDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consumoPeriodoAnteriorPDFActionPerformed(evt);
+                consumoUnidadePDFActionPerformed(evt);
             }
         });
-        jMenu1.add(consumoPeriodoAnteriorPDF);
+        jMenu1.add(consumoUnidadePDF);
 
         jMenuBar1.add(jMenu1);
 
@@ -374,6 +383,25 @@ public class Principal extends javax.swing.JFrame {
         }
         else{ JOptionPane.showMessageDialog(null,"Nenhuma conta selecionada"); }        
     }//GEN-LAST:event_consumoPeriodoAnteriorPDFActionPerformed
+
+    private void consumoUnidadePDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consumoUnidadePDFActionPerformed
+        // TODO add your handling code here:
+        ProcessaArq arq = new ProcessaArq();
+        
+        if(arq.verificaConta() || arq.verificaRelatorioConsumoUsuarios()){
+            try {     
+                arq.gravaArquivoConsumoUsuarios(arq.buscaRelatorioUsuarios(), this.caminho);
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{ JOptionPane.showMessageDialog(null,"Nenhuma conta selecionada"); }
+        
+        
+        
+    }//GEN-LAST:event_consumoUnidadePDFActionPerformed
 
 
     private void preencheTabelaOriginal(ArrayList<Conta> conta){
@@ -638,6 +666,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu abreFatura;
     private javax.swing.JMenuItem consumoLinhaPDF;
     private javax.swing.JMenuItem consumoPeriodoAnteriorPDF;
+    private javax.swing.JMenuItem consumoUnidadePDF;
     private javax.swing.JMenuItem detPeriodoAnterior;
     private javax.swing.JMenu detalheFatura;
     private javax.swing.JMenu detalhes;

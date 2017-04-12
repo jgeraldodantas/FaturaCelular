@@ -101,16 +101,38 @@ public class Tratamento {
         return texto;
     }
    
-    public String retornaTipo(int t, String destino){
+    public String retornaTipo(int t, String origem, String destino){
         String tipo = new String();
         
         switch(t){
             case 0:  case 1:  case 2:  case 3:  {                 
+              
+            if(origem.isEmpty() || destino.isEmpty()){ tipo = "Roaming Indeterminado"; break; }
+            else{
+                if( origem.equals(destino) && (!origem.equals("DDD 35")) ){ tipo = "Roaming VC1"; break; }
+                else{                   
+                     if((origem.startsWith("DDD 03")) && (destino.startsWith("DDD 03")) &&
+                        (!origem.equals("DDD 35"))  && (!destino.equals("DDD 35"))){ 
+                         tipo = "Roaming VC2"; break; 
+                     }
+                     else{ 
+                         if((origem.startsWith("DDD 03")) && (!origem.equals("DDD 35")) && 
+                           (!destino.startsWith("DDD 03"))){
+                            tipo = "Roaming VC3"; break;
+                         }
+                         else{ tipo = "Roaming Desconhecido"; break; }                        
+                     }
+                }
+            }    
+                
+                
+            /*    
                 if(destino.equals("DDD 035")){ tipo = "Roaming VC1"; break; }
                 else{                   
                      if(destino.contains("DDD 03")){ tipo = "Roaming VC2"; break; }
                      else{ tipo = "Roaming VC3"; break; }               
-                }         
+                }
+            */    
             }
             case 4:  case 5:  case 6:  case 7:  { tipo = "VC1"; break; }
             case 8:  case 9:  case 10: case 11: { tipo = "VC2"; break; }
@@ -155,10 +177,13 @@ public class Tratamento {
         if(m<10){tempo1[1] = "0" + Integer.toString(m); }
         else{tempo1[1] = Integer.toString(m); }
         
-        if(s<10){tempo1[2] = "0" + Integer.toString(2); }
+        if(s<10){tempo1[2] = "0" + Integer.toString(s); }
         else{tempo1[2] = Integer.toString(s); }
         
-        total = tempo1[0]+":"+tempo1[1]+":"+tempo1[2];   
+        total = tempo1[0]+":"+tempo1[1]+":"+tempo1[2];  
+        
+        System.out.println(s+" - "+m+" = "+h);
+        
         return total;   
     }
     

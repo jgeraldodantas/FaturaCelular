@@ -152,6 +152,7 @@ public class Banco {
         String descricao;
         String tipo;
         String areaDestino;
+        String areaOrigem;
         Conta servico = new Conta();
         Tratamento item = new Tratamento(); 
         ArrayList<Conta> listaFatura = new ArrayList<Conta>();
@@ -173,7 +174,9 @@ public class Banco {
             tipo = new String();
             descricao = new String();
             areaDestino = new String();
+            areaOrigem = new String();
             
+            areaOrigem = this.periodoAnterior.get(indiceConta).getOrigem();
             areaDestino = this.periodoAnterior.get(indiceConta).getDestino();
             descricao = this.periodoAnterior.get(indiceConta).getDescricaoServico() + this.periodoAnterior.get(indiceConta).getDestinoServico();
             descricao.trim();
@@ -182,113 +185,113 @@ public class Banco {
                 // ****************************** Cobrança tipo Roaming ******************************
                 case "Ligacoes de Longa Distancia Para Celulares Vivo":{  
                     indiceRelatorio = 0;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);                    
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);                    
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Celulares de Outras Operadoras":{   
                     indiceRelatorio = 1;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Fixo Vivo":{     
                     indiceRelatorio = 2;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Fixo de Outras Operadoras":{ 
                     indiceRelatorio = 3;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                                 
                 // ****************************** Cobrança tipo VC1 ******************************
                 case "Ligacoes Locais Para Celulares Vivo":{   
                     indiceRelatorio = 4;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes Locais Para Celulares de Outras Operadoras":{ 
                     indiceRelatorio = 5;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes Locais Para Fixo Vivo":{       
                     indiceRelatorio = 6;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes Locais Para Fixo de Outras Operadoras":{  
                     indiceRelatorio = 7;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                 
                 // ****************************** Cobrança tipo VC2 ******************************
                 case "Para Dentro do Estado Para Celulares Vivo":{ 
                     indiceRelatorio = 8;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Dentro do Estado Para Celulares de Outras Operadoras":{
                     indiceRelatorio = 9; 
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Dentro do Estado Para Fixo Vivo":{     
                     indiceRelatorio = 10;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Dentro do Estado Para Fixo de Outras Operadoras":{  
                     indiceRelatorio = 11;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                 
                 // ****************************** Cobrança tipo VC3 ******************************
                 case "Para Outros Estados Para Celulares Vivo":{         
                     indiceRelatorio = 12;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Outros Estados Para Celulares de Outras Operadoras":{  
                     indiceRelatorio = 13;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Outros Estados Para Fixo Vivo":{            
                     indiceRelatorio = 14;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Outros Estados Para Fixo de Outras Operadoras":{     
                     indiceRelatorio = 15; 
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 // ****************************** Cobrança tipo SMS ******************************
                 case "Torpedo SMS":{              
                     indiceRelatorio = 16;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Torpedo SMS para Outros Servicos":{             
                     indiceRelatorio = 17;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
@@ -296,7 +299,7 @@ public class Banco {
                               
                 case "Internet Movel - Vivo Wap":{      
                     indiceRelatorio = 18;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                      
@@ -304,13 +307,13 @@ public class Banco {
                   
                 case "Ligacoes Locais Para Grupo":{      
                     indiceRelatorio = 19;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Internet Movel":{              
                     indiceRelatorio = 20; 
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                       
@@ -318,25 +321,25 @@ public class Banco {
                
                 case "Acesso Caixa Postal":{         
                     indiceRelatorio = 21;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                 
                 case "Adicional por Ligacoes Realizadas":{          
                     indiceRelatorio = 22;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Adicional por Ligacoes Recebidas":{      
                     indiceRelatorio = 23;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                                        
                 case "Ligacoes Recebidas em Roaming":{            
                     indiceRelatorio = 24;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
@@ -344,13 +347,13 @@ public class Banco {
                 
                 case "Ligacoes Recebidas a Cobrar De Celulares Vivo":{   
                     indiceRelatorio = 25;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }  
                 
                 case "Recebidas a Cobrar de Outro DDD De Celulares Vivo":{   
                     indiceRelatorio = 26;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }  
                 
@@ -358,13 +361,13 @@ public class Banco {
               
                 case "": case " ":{      
                     indiceRelatorio = 27;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }  
                                 
                 default:{                 
                     indiceRelatorio = 28;
-                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao ,item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);}
+                    listaFatura = organizaServicosPeriodoAnterior(indiceConta, descricao ,item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);}
             }// switch        
             
         }// for
@@ -414,6 +417,7 @@ public class Banco {
     public void relatorioServicos(){
         String descricao;
         String tipo;
+        String areaOrigem;
         String areaDestino;
         Conta servico = new Conta();
         Tratamento item = new Tratamento(); 
@@ -435,8 +439,10 @@ public class Banco {
             int indiceRelatorio = 0;
             tipo = new String();
             descricao = new String();
+            areaOrigem = new String();
             areaDestino = new String();
             
+            areaOrigem = this.conta.get(indiceConta).getOrigem();
             areaDestino = this.conta.get(indiceConta).getDestino();
             descricao = this.conta.get(indiceConta).getDescricaoServico() + this.conta.get(indiceConta).getDestinoServico();
             descricao.trim();
@@ -445,113 +451,113 @@ public class Banco {
                 // ****************************** Cobrança tipo Roaming ******************************
                 case "Ligacoes de Longa Distancia Para Celulares Vivo":{  
                     indiceRelatorio = 0;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);                    
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);                    
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Celulares de Outras Operadoras":{   
                     indiceRelatorio = 1;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Fixo Vivo":{     
                     indiceRelatorio = 2;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes de Longa Distancia Para Fixo de Outras Operadoras":{ 
                     indiceRelatorio = 3;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                                 
                 // ****************************** Cobrança tipo VC1 ******************************
                 case "Ligacoes Locais Para Celulares Vivo":{   
                     indiceRelatorio = 4;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes Locais Para Celulares de Outras Operadoras":{ 
                     indiceRelatorio = 5;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes Locais Para Fixo Vivo":{       
                     indiceRelatorio = 6;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Ligacoes Locais Para Fixo de Outras Operadoras":{  
                     indiceRelatorio = 7;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                 
                 // ****************************** Cobrança tipo VC2 ******************************
                 case "Para Dentro do Estado Para Celulares Vivo":{ 
                     indiceRelatorio = 8;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Dentro do Estado Para Celulares de Outras Operadoras":{
                     indiceRelatorio = 9; 
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Dentro do Estado Para Fixo Vivo":{     
                     indiceRelatorio = 10;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Dentro do Estado Para Fixo de Outras Operadoras":{  
                     indiceRelatorio = 11;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                 
                 // ****************************** Cobrança tipo VC3 ******************************
                 case "Para Outros Estados Para Celulares Vivo":{         
                     indiceRelatorio = 12;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Outros Estados Para Celulares de Outras Operadoras":{  
                     indiceRelatorio = 13;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Outros Estados Para Fixo Vivo":{            
                     indiceRelatorio = 14;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Para Outros Estados Para Fixo de Outras Operadoras":{     
                     indiceRelatorio = 15; 
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 // ****************************** Cobrança tipo SMS ******************************
                 case "Torpedo SMS":{              
                     indiceRelatorio = 16;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Torpedo SMS para Outros Servicos":{             
                     indiceRelatorio = 17;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
@@ -559,7 +565,7 @@ public class Banco {
                               
                 case "Internet Movel - Vivo Wap":{      
                     indiceRelatorio = 18;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                      
@@ -567,13 +573,13 @@ public class Banco {
                   
                 case "Ligacoes Locais Para Grupo":{      
                     indiceRelatorio = 19;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Internet Movel":{              
                     indiceRelatorio = 20; 
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                       
@@ -581,25 +587,25 @@ public class Banco {
                
                 case "Acesso Caixa Postal":{         
                     indiceRelatorio = 21;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                 
                 case "Adicional por Ligacoes Realizadas":{          
                     indiceRelatorio = 22;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
                 case "Adicional por Ligacoes Recebidas":{      
                     indiceRelatorio = 23;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                                                        
                 case "Ligacoes Recebidas em Roaming":{            
                     indiceRelatorio = 24;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }
                 
@@ -607,13 +613,13 @@ public class Banco {
                 
                 case "Ligacoes Recebidas a Cobrar De Celulares Vivo":{   
                     indiceRelatorio = 25;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }  
                 
                 case "Recebidas a Cobrar de Outro DDD De Celulares Vivo":{   
                     indiceRelatorio = 26;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }  
                 
@@ -621,13 +627,13 @@ public class Banco {
               
                 case "": case " ":{      
                     indiceRelatorio = 27;
-                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);
+                    listaFatura = organizaFatura(indiceConta, descricao, item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);
                     break;
                 }  
                                 
                 default:{                 
                     indiceRelatorio = 28;
-                    listaFatura = organizaFatura(indiceConta, descricao ,item.retornaTipo(indiceRelatorio,areaDestino),listaFatura);}
+                    listaFatura = organizaFatura(indiceConta, descricao ,item.retornaTipo(indiceRelatorio,areaOrigem,areaDestino),listaFatura);}
             }// switch        
         
         }// for

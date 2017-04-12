@@ -72,6 +72,9 @@ public class ProcessaArq {
         return banco.getPeriodoAnterior();
     }   
     
+    
+    
+    
     public void gravaArquivoConsumoUsuarios(ArrayList<Usuario> lista, String caminho) throws IOException, DocumentException{
              
         Document doc = null;
@@ -182,21 +185,138 @@ public class ProcessaArq {
             informacao = "R$"+ df.format(soma);
             table.addCell(informacao);                                   
             table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);  
+                                        
+            doc.add(table);
+            // fim da página
+        } finally {
+            if (doc != null) {
+                //fechamento do documento
+                doc.close();
+            }
+            if (os != null) {
+               //fechamento da stream de saída
+               os.close();
+            }
+        }     
+    }
+
+    
+    
+    
+    
+    
+    
+    public void gravaArquivoConsumoUnidades(ArrayList<Usuario> lista, String caminho) throws IOException, DocumentException{
+             
+        Document doc = null;
+        OutputStream os = null;
+        Paragraph p = new Paragraph();  
+        Tratamento tempo = new Tratamento();
+        DecimalFormat df = new DecimalFormat("#####.##");
+        String informacao, tipo = new String();
+        Double soma, valorTotal = 0.0;      
+        
+        PdfPTable table = new PdfPTable(5); //tabela com 3 colunas
+        float[] headerwidths = { 30, 80, 40, 20, 20 }; // define a largura de cada coluna
+        table.setWidths(headerwidths);
+                
+        caminho = localizaArquivo(false)+".pdf";        
+        try {//configurações da página          
+            float fntSize, lineSpacing;
+            fntSize = 8f;
+            lineSpacing = 8f;
+            doc = new Document(PageSize.A4.rotate(), 10, 10, 30, 40);
             
-            table.addCell("");            
-            table.addCell("");            
-            table.addCell("");               
-            table.addCell("");            
-            table.addCell("");      
+            os = new FileOutputStream(caminho);            
+            PdfWriter.getInstance(doc, os);            
+            doc.open();
+                                                
+            //cabecalho da tabela
+            table.getDefaultCell().setBorder(0);
+            table.getWidthPercentage();
+                      
+            table.getDefaultCell().setBorder(0);
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            table.getDefaultCell().setColspan(5);
+
+            table.addCell(new Paragraph("Consumo por usuário"));
+
+            table.getDefaultCell().setBorder(1);
+            table.getDefaultCell().setColspan(0);
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
             
-            //Legenda                   
-            table.getDefaultCell().setBorder(0);      
-            table.addCell("M = Modem");   
-            table.addCell("V = Voz          VD = Voz + Dados");            
-            table.addCell("");          
-            table.addCell("");          
-            table.addCell("");  
-                             
+            table.addCell(new Paragraph(""));
+            table.addCell(new Paragraph(""));
+            table.addCell(new Paragraph(""));
+            table.addCell(new Paragraph(""));
+            table.addCell(new Paragraph(""));
+            table.getDefaultCell().setBorder(1);
+            
+            
+            table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY); 
+            table.addCell(new Paragraph("Cidade"));
+            table.addCell(new Paragraph("Usuário"));
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            table.addCell(new Paragraph("Número"));
+            table.addCell(new Paragraph("Tipo"));
+            table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+            table.addCell(new Paragraph("Valor"));
+            table.getDefaultCell().setBackgroundColor(BaseColor.WHITE); 
+            
+            soma = 0.0; 
+            for(int a=0;a<=lista.size()-1;a++){
+
+                //cidade
+                informacao = new String();
+                informacao = lista.get(a).getCidade();
+            //    table.setTotalWidth(80);
+                table.addCell(new Paragraph(informacao));        
+                
+                //Usuário
+                informacao = new String();
+                informacao = lista.get(a).getNome();
+            //    table.setTotalWidth(200);
+                table.addCell(new Paragraph(informacao));                    
+
+                //Número
+                informacao = new String();                                 
+                informacao = String.valueOf(lista.get(a).getLinha());
+            //    table.setTotalWidth(10);
+                table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+                table.addCell(new Paragraph(informacao)); 
+
+                //Tipo
+                informacao = new String();                                 
+                informacao = lista.get(a).getTipo();
+            //    table.setTotalWidth(10);
+                table.addCell(new Paragraph(informacao)); 
+                
+                //Valor
+                informacao = new String();  
+                soma += lista.get(a).getValor();
+                informacao = "R$"+ df.format(lista.get(a).getValor());
+            //    table.setTotalWidth(10);
+                table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+                table.addCell(new Paragraph(informacao)); 
+            }                     
+            
+            // Total
+            table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
+            informacao = new String();
+            informacao = "Total";                    
+            table.addCell(informacao);
+
+            // tempo                               
+            table.addCell("");            
+            table.addCell("");            
+            table.addCell("");    
+
+            // valor
+            informacao = new String();
+            informacao = "R$"+ df.format(soma);
+            table.addCell(informacao);                                   
+            table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);  
+                                        
             doc.add(table);
             // fim da página
         } finally {
@@ -272,7 +392,7 @@ public class ProcessaArq {
                     tipo = new String();
                     informacao = new String();  
                                         
-                    informacao = "* * * * * "+listaTipos.get(listaTipos.size()-1)+" * * * * *";                     
+                    informacao = ""+listaTipos.get(listaTipos.size()-1)+"";                     
                     table.getDefaultCell().setBorder(1);
                     table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                     table.getDefaultCell().setColspan(3);

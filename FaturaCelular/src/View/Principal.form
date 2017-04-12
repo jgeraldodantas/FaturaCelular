@@ -84,6 +84,14 @@
             <Property name="text" type="java.lang.String" value="Salvar em PDF    *"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="consumoPeriodoAnteriorPDF">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consumo em per&#xed;odo anterior"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="consumoPeriodoAnteriorPDFActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="consumoLinhaPDF">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consumo por linhas"/>
@@ -100,12 +108,12 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="servicoUtilizadoPDFMouseClicked"/>
               </Events>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="consumoPeriodoAnteriorPDF">
+            <MenuItem class="javax.swing.JMenuItem" name="consumoUnidadePDF">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Consumo em per&#xed;odo anterior"/>
+                <Property name="text" type="java.lang.String" value="Consumo por unidade"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="consumoPeriodoAnteriorPDFActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="consumoUnidadePDFActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
