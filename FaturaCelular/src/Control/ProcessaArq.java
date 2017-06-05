@@ -88,9 +88,14 @@ public class ProcessaArq {
         ArrayList<String> listaCidade = new ArrayList<String>();
         String local = new String();
         String informacao, tipo = new String();
-        Double soma, valorTotal = 0.0;   
+        Double soma, valorTotal, diferenca = 0.0;   
         Usuario unidade = new Usuario();
         ArrayList<Usuario> listaUnidades = new ArrayList<Usuario>();
+        
+        if(banco.getConta().get(banco.getConta().size()-1).getDiferenca() > 0){
+            diferenca = banco.getConta().get(banco.getConta().size()-1).getDiferenca()/9;
+        }
+        else{ diferenca = 0.0; }
         
         for(int a=0;a<=listaUsuario.size()-1;a++){                
             if( (!listaCidade.contains(listaUsuario.get(a).getCidade())) ){
@@ -195,7 +200,7 @@ public class ProcessaArq {
                 // Total
                 table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
                 informacao = new String();
-                informacao = "Total";                    
+                informacao = "Total apurado";                    
                 table.addCell(informacao);
 
                 // tempo                        
@@ -208,6 +213,24 @@ public class ProcessaArq {
                 informacao = "R$"+ df.format(soma);
                 table.addCell(informacao);                                   
                 table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);  
+                
+                if((soma-diferenca)>0){                    
+                   table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
+                   informacao = new String();
+                   informacao = "Total a pagar";                    
+                   table.addCell(informacao);
+
+                   // tempo                        
+                   table.addCell("");            
+                   table.addCell("");    
+                   table.addCell("");    
+
+                   // valor
+                   informacao = new String();
+                   informacao = "R$"+ df.format(soma-diferenca);
+                   table.addCell(informacao);                                   
+                   table.getDefaultCell().setBackgroundColor(BaseColor.WHITE); 
+                }
                 
                 table.addCell("");            
                 table.addCell(""); 
@@ -266,7 +289,7 @@ public class ProcessaArq {
             // Total
             table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
             informacao = new String();
-            informacao = "Total";                    
+            informacao = "Total apurado";                    
             table.addCell(informacao);
 
             // tempo                        
@@ -279,6 +302,25 @@ public class ProcessaArq {
             informacao = "R$"+ df.format(soma);
             table.addCell(informacao);                                   
             table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);  
+            
+            table.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);  
+            informacao = new String();
+            informacao = "Total a pagar";                    
+            table.addCell(informacao);
+
+            // tempo                        
+            table.addCell("");            
+            table.addCell("");    
+            table.addCell("");    
+
+            // valor
+            informacao = new String();
+            informacao = "R$"+ df.format(soma-banco.getConta().get(banco.getConta().size()-1).getDiferenca());
+            table.addCell(informacao);                                   
+            table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);  
+            
+            
+            
             
             doc.add(table); 
             doc.close();
@@ -605,15 +647,28 @@ public class ProcessaArq {
     public void importaDadosFatura(String caminho) throws ParseException{
         Tratamento item = new Tratamento();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");  
-                
+        Double diferenca = 0.0;
+        Boolean ok = false;        
+        
+        while (!ok){
+            try{
+                diferenca = Double.parseDouble(JOptionPane.showInputDialog("Valor da diferença"));
+                if(diferenca >= 0.0){ ok = true; }
+            }
+            catch(Exception e){
+                diferenca = Double.parseDouble(JOptionPane.showInputDialog("Valor da diferença"));
+                if(diferenca >= 0.0){ ok = true; }
+            }
+        }        
+        
         try{
             Double valor = 0.0;
             String[] vetor = new String[20];
             String separador = new String();
             String linha = new String();
-            Conta dados = new Conta();  
+            Conta dados = new Conta(); 
             BufferedReader arq = new BufferedReader(new InputStreamReader(new FileInputStream(caminho),"ISO-8859-1")); 
-                                                   
+            
             separador = item.verificaSeparador(arq.readLine());
             while(arq.ready()){         
                 dados = new Conta(); 
@@ -641,6 +696,7 @@ public class ProcessaArq {
                 dados.setUnidade(vetor[15]);
                 dados.setReferencia(vetor[16]);                             
                 dados.setValor(item.trataValor(vetor[17]));
+                dados.setDiferenca(diferenca);
                 banco.cadastro(dados);
                  
                 valor += dados.getValor();     
@@ -730,7 +786,7 @@ public class ProcessaArq {
         if(banco.getRelatorioPeriodoAnterior().size() > 1){ ok = true; }
         return ok;
     }
-    
+   
     public boolean verificaRelatorioConsumoUsuarios(){
         boolean ok = false;
         if(banco.getRelatorioConsumoUsuario().size() > 1){ ok = true; }

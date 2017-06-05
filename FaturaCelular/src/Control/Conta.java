@@ -32,8 +32,9 @@ public class Conta {
     private String referencia;
     private Double valor;
     private String tipo; // variavel extra, não consta na fatura. Utilizada para agrupar os serviços em comum para medição 
+    private Double diferenca;
 
-    public Conta(long numConta, long telefoneOrigem, String detalheServico, String descricaoServico, String destinoServico, String dataLigacao, Date horaInicio, String destino, String telefoneChamado, String tarifa, String duracao, String operadoraDestino, String origem, String tipoChamada, String servico, String unidade, String referencia, Double valor, String tipo) {
+    public Conta(long numConta, long telefoneOrigem, String detalheServico, String descricaoServico, String destinoServico, String dataLigacao, Date horaInicio, String destino, String telefoneChamado, String tarifa, String duracao, String operadoraDestino, String origem, String tipoChamada, String servico, String unidade, String referencia, Double valor, String tipo, Double diferenca) {
         this.numConta = numConta;
         this.telefoneOrigem = telefoneOrigem;
         this.detalheServico = detalheServico;
@@ -53,6 +54,7 @@ public class Conta {
         this.referencia = referencia;
         this.valor = valor;
         this.tipo = tipo;
+        this.diferenca = diferenca;
     }
 
     public Conta() {
@@ -75,6 +77,7 @@ public class Conta {
         this.referencia = "";
         this.valor = 0.0;
         this.tipo = "";
+        this.diferenca = 0.0;
     }
 
     public long getNumConta() {
@@ -227,6 +230,14 @@ public class Conta {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public Double getDiferenca() {
+        return diferenca;
+    }
+
+    public void setDiferenca(Double diferenca) {
+        this.diferenca = diferenca;
     }
     
     

@@ -60,7 +60,7 @@ public class Banco {
     }
     
     
-          
+      
     public void criaPeriodoAnterior() throws ParseException{
 
         String[] data;
@@ -78,7 +78,7 @@ public class Banco {
         organizaRelatorioPeriodoAnterior();
     }
     
-    
+   
     
     public void organizaConsumoUsuarios(){
         ArrayList listaUsuario = new ArrayList<Usuario>();
