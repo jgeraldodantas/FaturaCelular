@@ -33,8 +33,9 @@ public class Conta {
     private Double valor;
     private String tipo; // variavel extra, não consta na fatura. Utilizada para agrupar os serviços em comum para medição 
     private Double diferenca;
+    private String periodo;
 
-    public Conta(long numConta, long telefoneOrigem, String detalheServico, String descricaoServico, String destinoServico, String dataLigacao, Date horaInicio, String destino, String telefoneChamado, String tarifa, String duracao, String operadoraDestino, String origem, String tipoChamada, String servico, String unidade, String referencia, Double valor, String tipo, Double diferenca) {
+    public Conta(long numConta, long telefoneOrigem, String detalheServico, String descricaoServico, String destinoServico, String dataLigacao, Date horaInicio, String destino, String telefoneChamado, String tarifa, String duracao, String operadoraDestino, String origem, String tipoChamada, String servico, String unidade, String referencia, Double valor, String tipo, Double diferenca, String mesReferencia) {
         this.numConta = numConta;
         this.telefoneOrigem = telefoneOrigem;
         this.detalheServico = detalheServico;
@@ -55,6 +56,7 @@ public class Conta {
         this.valor = valor;
         this.tipo = tipo;
         this.diferenca = diferenca;
+        this.periodo = mesReferencia;
     }
 
     public Conta() {
@@ -78,6 +80,7 @@ public class Conta {
         this.valor = 0.0;
         this.tipo = "";
         this.diferenca = 0.0;
+        this.periodo = "";
     }
 
     public long getNumConta() {
@@ -238,6 +241,14 @@ public class Conta {
 
     public void setDiferenca(Double diferenca) {
         this.diferenca = diferenca;
+    }
+
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
     }
     
     

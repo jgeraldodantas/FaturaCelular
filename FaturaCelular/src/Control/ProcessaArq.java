@@ -134,12 +134,13 @@ public class ProcessaArq {
                 table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 table.getDefaultCell().setColspan(5);
 
-                table.addCell(new Paragraph("CONSUMO POR UNIDADE"));
+                table.addCell(new Paragraph("CONSUMO POR UNIDADE "+banco.periodoFatura()));
 
                 table.getDefaultCell().setBorder(0);
                 table.getDefaultCell().setColspan(0);
                 table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-              
+                doc.add(table); 
+                
             for(int a=0; a<=listaCidade.size()-1;a++){
                 
                 table = new PdfPTable(5);
@@ -374,7 +375,7 @@ public class ProcessaArq {
             table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.getDefaultCell().setColspan(5);
 
-            table.addCell(new Paragraph("Consumo por usuário"));
+            table.addCell(new Paragraph("CONSUMO POR USUÁRIOS ")+banco.periodoFatura());
 
             table.getDefaultCell().setBorder(1);
             table.getDefaultCell().setColspan(0);
@@ -511,7 +512,7 @@ public class ProcessaArq {
             table.getDefaultCell().setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.getDefaultCell().setColspan(3);
 
-            table.addCell(new Paragraph(tempo.verificaNomeServico(lista)));
+            table.addCell(new Paragraph(tempo.verificaNomeServico(lista)+" "+banco.periodoFatura()));
 
             table.getDefaultCell().setBorder(1);
             table.getDefaultCell().setColspan(0);
@@ -697,6 +698,7 @@ public class ProcessaArq {
                 dados.setReferencia(vetor[16]);                             
                 dados.setValor(item.trataValor(vetor[17]));
                 dados.setDiferenca(diferenca);
+                dados.setPeriodo(banco.periodoFatura());
                 banco.cadastro(dados);
                  
                 valor += dados.getValor();     

@@ -115,8 +115,8 @@ public class Banco {
         Conta resumo;
         boolean ok = false;
         Tratamento tempo = new Tratamento();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");        
+        
         for(int a=0; a < lista.size();a++){
             if(lista.get(a).getDescricaoServico().equals(descricao) && lista.get(a).getTipo().equals(tipo)){   
                resumo = new Conta();
@@ -124,7 +124,6 @@ public class Banco {
                resumo.setValor(this.conta.get(indexConta).getValor() + lista.get(a).getValor());
                resumo.setDetalheServico(this.conta.get(indexConta).getDetalheServico());
                resumo.setDescricaoServico(descricao);
-               
                resumo.setTipo(tipo);
                lista.set(a,resumo); 
                ok = true;
@@ -137,8 +136,7 @@ public class Banco {
             resumo.setDuracao(tempo.somaTempo(this.conta.get(indexConta).getDuracao(), lista.get(0).getDuracao()));
             resumo.setDetalheServico(this.conta.get(indexConta).getDetalheServico());
             resumo.setValor(this.conta.get(indexConta).getValor());          
-            resumo.setDescricaoServico(descricao);   
-               
+            resumo.setDescricaoServico(descricao);  
             resumo.setTipo(tipo);
             lista.add(resumo);                    
         }          
@@ -374,7 +372,7 @@ public class Banco {
         this.setRelatorioPeriodoAnterior(listaFatura);
     }
     
-        public ArrayList<Conta> organizaServicosPeriodoAnterior(int indexConta, String descricao, String tipo, ArrayList<Conta> lista){ 
+    public ArrayList<Conta> organizaServicosPeriodoAnterior(int indexConta, String descricao, String tipo, ArrayList<Conta> lista){ 
         Conta resumo;
         boolean ok = false;
         Tratamento tempo = new Tratamento();
@@ -400,7 +398,7 @@ public class Banco {
             resumo.setDuracao(tempo.somaTempo(this.periodoAnterior.get(indexConta).getDuracao(), lista.get(0).getDuracao()));
             resumo.setDetalheServico(this.periodoAnterior.get(indexConta).getDetalheServico());
             resumo.setValor(this.periodoAnterior.get(indexConta).getValor());          
-            resumo.setDescricaoServico(descricao);   
+            resumo.setDescricaoServico(descricao); 
                
             resumo.setTipo(tipo);
             lista.add(resumo);                    
@@ -408,7 +406,31 @@ public class Banco {
         return lista;
     }
     
-    
+    public String periodoFatura(){
+        String periodo = new String();
+        Calendar cal = Calendar.getInstance();
+        int mes = cal.get(Calendar.MONTH);
+        int ano = cal.get(Calendar.YEAR);        
+        int mesInicio = 0;
+        int mesFim = 0;
+        int anoInicio = 0;
+        int anoFim = 0;
+        
+        if (mes == 1){ 
+            mesInicio = 12; 
+            mesFim = 1; 
+            anoInicio = ano - 1;
+            anoFim = ano;
+        }
+        else { 
+            mesInicio = mes - 1; 
+            mesFim = mes; 
+            anoInicio = ano;
+            anoFim = ano;
+        }
+        periodo = "25/"+mesInicio+"/"+anoInicio+" a 24/"+mesFim+"/"+anoFim; 
+        return periodo;
+    }
     
     public ArrayList<Conta> recuperaDados(){
        return this.conta;
