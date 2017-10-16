@@ -81,15 +81,16 @@ public class Banco {
    
     
     public void organizaConsumoUsuarios(){
-        ArrayList listaUsuario = new ArrayList<Usuario>();
+        ArrayList listaUsuario = new ArrayList();
         Usuario user;
         Double soma = 0.0;
                                
         // numero(linha) - plano(V/VD/M) - valor
         for(int a=0;a<this.usuarios.size();a++){
+            soma = 0.0;
             user = new Usuario();
             listaUsuario.add(user);
-            soma += usuarios.get(a).getValor();
+        //    soma += usuarios.get(a).getValor();
             
             for(int b=0;b<this.conta.size();b++){                
                 if(String.valueOf(this.conta.get(b).getTelefoneOrigem()).equals(String.valueOf(this.usuarios.get(a).getLinha()))){                    
@@ -104,7 +105,6 @@ public class Banco {
             user.setTipo(this.usuarios.get(a).getTipo());
             user.setValor(soma);
             listaUsuario.set(a,user);
-            soma = 0.0;
         }        
         this.setRelatorioConsumoUsuario(listaUsuario);
     }

@@ -105,36 +105,53 @@ public class Tratamento {
         String tipo = new String();
         
         switch(t){
+          
             case 0:  case 1:  case 2:  case 3:  {                 
               
-            if(origem.isEmpty() || destino.isEmpty()){ tipo = "Roaming Indeterminado"; break; }
-            else{
-                if( origem.equals(destino) && (!origem.equals("DDD 35")) ){ tipo = "Roaming VC1"; break; }
-                else{                   
-                     if((origem.startsWith("DDD 03")) && (destino.startsWith("DDD 03")) &&
-                        (!origem.equals("DDD 35"))  && (!destino.equals("DDD 35"))){ 
-                         tipo = "Roaming VC2"; break; 
-                     }
-                     else{ 
-                         if((origem.startsWith("DDD 03")) && (!origem.equals("DDD 35")) && 
-                           (!destino.startsWith("DDD 03"))){
-                            tipo = "Roaming VC3"; break;
+                if(origem.isEmpty() || destino.isEmpty()){ tipo = "Roaming Indeterminado"; break; }
+                else{
+                    if( origem.equals(destino) && (!origem.equals("DDD 35")) ){ tipo = "Roaming VC1"; break; }
+                    else{                   
+                         if((origem.startsWith("DDD 03")) && (destino.startsWith("DDD 03")) &&
+                            (!origem.equals("DDD 35"))  && (!destino.equals("DDD 35"))){ 
+                             tipo = "Roaming VC2"; break; 
                          }
-                         else{ tipo = "Roaming Desconhecido"; break; }                        
-                     }
-                }
-            }    
-                
-                
-            /*    
-                if(destino.equals("DDD 035")){ tipo = "Roaming VC1"; break; }
-                else{                   
-                     if(destino.contains("DDD 03")){ tipo = "Roaming VC2"; break; }
-                     else{ tipo = "Roaming VC3"; break; }               
-                }
-            */    
+                         else{ 
+                             if((origem.startsWith("DDD 03")) && (!origem.equals("DDD 35")) && 
+                               (!destino.startsWith("DDD 03"))){
+                                tipo = "Roaming VC3"; break;
+                             }
+                             else{ tipo = "Roaming Desconhecido"; break; }                        
+                         }
+                    }
+                }                 
             }
-            case 4:  case 5:  case 6:  case 7:  { tipo = "VC1"; break; }
+            
+        /*    
+            case 0:  case 1:  case 2:  case 3:  { 
+                if(origem.isEmpty() || destino.isEmpty()){ tipo = "Indeterminado"; break; }
+                else{
+                    if( origem.equals(destino) && (!origem.equals("DDD 35")) && !destino.equals("") ){ tipo = "VC1"; break; }
+                    else{                   
+                         if((origem.startsWith("DDD 03")) && (destino.startsWith("DDD 03")) &&
+                            (!origem.equals("DDD 35"))  && (!destino.equals("DDD 35"))){ 
+                             tipo = "VC2"; break; 
+                         }
+                         else{ 
+                             if((origem.startsWith("DDD 03")) && (!origem.equals("DDD 35")) && 
+                               (!destino.startsWith("DDD 03"))){
+                                tipo = "VC3"; break;
+                             }
+                             else{ tipo = "Desconhecido"; break; }                        
+                         }
+                    }
+                }                 
+            }
+        */    
+            case 4:  case 5:  case 6:  case 7:  { 
+                if(!destino.equals("")){ tipo = "VC1"; }
+                break; 
+            }
             case 8:  case 9:  case 10: case 11: { tipo = "VC2"; break; }
             case 12: case 13: case 14: case 15: { tipo = "VC3"; break; }
             case 16: case 17: { tipo = "SMS"; break; }

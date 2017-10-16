@@ -91,12 +91,12 @@ public class ProcessaArq {
         Double soma, valorTotal, diferenca = 0.0;   
         Usuario unidade = new Usuario();
         ArrayList<Usuario> listaUnidades = new ArrayList<Usuario>();
-        
+    /*    
         if(banco.getConta().get(banco.getConta().size()-1).getDiferenca() > 0){
             diferenca = banco.getConta().get(banco.getConta().size()-1).getDiferenca()/9;
         }
         else{ diferenca = 0.0; }
-        
+    */    
         for(int a=0;a<=listaUsuario.size()-1;a++){                
             if( (!listaCidade.contains(listaUsuario.get(a).getCidade())) ){
                 listaCidade.add(listaUsuario.get(a).getCidade());
@@ -316,7 +316,8 @@ public class ProcessaArq {
 
             // valor
             informacao = new String();
-            informacao = "R$"+ df.format(soma-banco.getConta().get(banco.getConta().size()-1).getDiferenca());
+            informacao = "R$"+ df.format(soma);
+        //    informacao = "R$"+ df.format(soma-banco.getConta().get(banco.getConta().size()-1).getDiferenca());
             table.addCell(informacao);                                   
             table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);  
             
@@ -650,7 +651,7 @@ public class ProcessaArq {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");  
         Double diferenca = 0.0;
         Boolean ok = false;        
-        
+    /*    
         while (!ok){
             try{
                 diferenca = Double.parseDouble(JOptionPane.showInputDialog("Valor da diferença"));
@@ -661,7 +662,7 @@ public class ProcessaArq {
                 if(diferenca >= 0.0){ ok = true; }
             }
         }        
-        
+    */    
         try{
             Double valor = 0.0;
             String[] vetor = new String[20];
@@ -701,7 +702,7 @@ public class ProcessaArq {
                 dados.setPeriodo(banco.periodoFatura());
                 banco.cadastro(dados);
                  
-                valor += dados.getValor();     
+            //    valor += dados.getValor();     
             }
             arq.close();
                         
@@ -739,6 +740,7 @@ public class ProcessaArq {
                 user.setNome(vetor[2]);
                 user.setLinha(Long.parseLong(vetor[3]));
                 user.setTipo(vetor[4]);
+                user.setValor(valor);
                
                 banco.cadastroUsuario(user);             
             }
