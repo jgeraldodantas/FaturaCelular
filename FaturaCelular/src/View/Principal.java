@@ -6,7 +6,7 @@
 package View;
 
 import Banco.Banco;
-import Banco.Usuario;
+import Banco.Usuario; 
 import Control.Conta;
 import Control.ProcessaArq;
 import Control.Tratamento;

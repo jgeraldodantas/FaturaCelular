@@ -108,7 +108,7 @@ public class ProcessaArq {
                 
         caminho = localizaArquivo(false)+".pdf";        
         try {//configurações da página          
-            float fntSize, lineSpacing;
+            float fntSize, lineSpacing; 
             fntSize = 8f;
             lineSpacing = 8f;
             
